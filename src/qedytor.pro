@@ -35,23 +35,23 @@ SOURCES       += main.cpp \
 
 DEFINES += plugin_ctrltab
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../hisyntax_temp/build-hisyntax-Desktop_Qt_5_12_0_MinGW_64_bit-Release/release/ -lhisyntax
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../hisyntax_temp/build-hisyntax-Desktop_Qt_5_12_0_MinGW_64_bit-Debug/debug/ -lhisyntax
-else:unix: LIBS += -L$$PWD/../../hisyntax_temp/build-hisyntax-Desktop_Qt_5_12_0_GCC_64bit-Debug/ -lhisyntax
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../bin/ -lhisyntax
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../bin/ -lhisyntax
+else:unix: LIBS += -L$$PWD/../bin/ -lhisyntax
 
-INCLUDEPATH += $$PWD/../../hisyntax_temp/src
-DEPENDPATH += $$PWD/../../hisyntax_temp/src
+INCLUDEPATH += $$PWD/../hisyntax/src
+DEPENDPATH += $$PWD/../hisyntax/src
 
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../../hisyntax_temp/build-hisyntax-Desktop_Qt_5_12_0_MinGW_64_bit-Release/release/libhisyntax.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../hisyntax_temp/build-hisyntax-Desktop_Qt_5_12_0_MinGW_64_bit-Debug/debug/libhisyntax.a
-else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../../hisyntax_temp/build-hisyntax-Desktop_Qt_5_12_0_MinGW_64_bit-Debug/release/hisyntax.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../hisyntax_temp/build-hisyntax-Desktop_Qt_5_12_0_MinGW_64_bit-Debug/debug/hisyntax.lib
-else:unix: PRE_TARGETDEPS += $$PWD/../../hisyntax_temp/build-hisyntax-Desktop_Qt_5_12_0_GCC_64bit-Debug/libhisyntax.a
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../bin/libhisyntax.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../bin/libhisyntax.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../bin/hisyntax.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../bin/hisyntax.lib
+else:unix: PRE_TARGETDEPS += $$PWD/../bin/libhisyntax.a
 
-unix|win32: LIBS += -L$$PWD/../../DCPCryptCpp/ -ldcpcrypt
+unix|win32: LIBS += -L$$PWD/../bin/ -ldcpcrypt
 
-INCLUDEPATH += $$PWD/../../DCPCryptCpp
-DEPENDPATH += $$PWD/../../DCPCryptCpp
+INCLUDEPATH += $$PWD/../DCPCryptCpp
+DEPENDPATH += $$PWD/../DCPCryptCpp
 
-win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../../DCPCryptCpp/dcpcrypt.lib
-else:unix|win32-g++: PRE_TARGETDEPS += $$PWD/../../DCPCryptCpp/libdcpcrypt.a
+win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../bin/dcpcrypt.lib
+else:unix|win32-g++: PRE_TARGETDEPS += $$PWD/../bin/libdcpcrypt.a
