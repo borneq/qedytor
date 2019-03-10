@@ -22,9 +22,6 @@ ConfigTableView::~ConfigTableView()
 void ConfigTableView::update()
 {
     model.setList(*variantableList, *headerList);
-    tableView->setModel(nullptr);
-    tableView->setModel(&model);
-    tableView->setColumnWidth(0,200);
 }
 
 QItemSelectionModel* ConfigTableView::selectionModel()

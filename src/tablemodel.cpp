@@ -65,6 +65,8 @@ Qt::ItemFlags TableModel::flags(const QModelIndex& index) const
 
 void TableModel::setList(QList<ConfigItem*> &variantableList, QStringList &headerList)
 {
+    beginResetModel();
     this->variantableList = variantableList;
     this->headerList = headerList;
+    endResetModel();
 }

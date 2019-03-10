@@ -50,11 +50,7 @@ void ConfigDialog::addRecord()
         ce->name = fi.fileName();
         ce->path = fi.absoluteFilePath();
         config->otherEditors.append(ce);
-
         listEditors->update();
-        tabList->removeTab(0);
-        tabList->insertTab(0, listEditors, "Editors");
-        tabList->setCurrentIndex(0);
     }
     else if (tabList->currentIndex()==1)
     {
@@ -63,11 +59,7 @@ void ConfigDialog::addRecord()
         ConfigFile *cf = new ConfigFile;
         cf->path = fi.absoluteFilePath();
         config->handy.append(cf);
-
         listHandy->update();
-        tabList->removeTab(1);
-        tabList->insertTab(1, listHandy, "Handy");
-        tabList->setCurrentIndex(1);
     }
     else if (tabList->currentIndex()==2)
     {
@@ -76,11 +68,7 @@ void ConfigDialog::addRecord()
         ConfigFile *cf = new ConfigFile;
         cf->path = fi.absoluteFilePath();
         config->mru.append(cf);
-
         listMru->update();
-        tabList->removeTab(2);
-        tabList->insertTab(2, listMru, "Mru");
-        tabList->setCurrentIndex(2);
     }
 }
 
@@ -100,9 +88,6 @@ void ConfigDialog::deleteRecord()
                 config->otherEditors.removeAt(index.row());
             }
             listEditors->update();
-            tabList->removeTab(0);
-            tabList->insertTab(0, listEditors, "Editors");
-            tabList->setCurrentIndex(0);
         }
     }
     else if (tabList->currentIndex()==1)
@@ -119,9 +104,6 @@ void ConfigDialog::deleteRecord()
                 config->handy.removeAt(index.row());
             }
             listHandy->update();
-            tabList->removeTab(1);
-            tabList->insertTab(1, listHandy, "Handy");
-            tabList->setCurrentIndex(1);
         }
     }
     else if (tabList->currentIndex()==2)
@@ -138,9 +120,6 @@ void ConfigDialog::deleteRecord()
                 config->mru.removeAt(index.row());
             }
             listMru->update();
-            tabList->removeTab(1);
-            tabList->insertTab(1, listMru, "Mru");
-            tabList->setCurrentIndex(1);
         }
     }
 }
