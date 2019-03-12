@@ -331,9 +331,6 @@ void TabWindow::createMenu()
     auto removeObsoleteAction = mruMenu->addAction("Remove obsolete");
     connect(removeObsoleteAction, SIGNAL(triggered()), this, SLOT(removeObsoleteMru()));
 
-    handyMenu = menuBar()->addMenu(tr("&Handy"));
-    addFilelistToMenu(handyMenu, config.handy);
-
     QMenu *menuOthers = menuBar()->addMenu(tr("&Other editors"));
     auto othersGroup = new QActionGroup(menuOthers);
     othersGroup->setExclusive(true);
@@ -351,9 +348,25 @@ void TabWindow::createMenu()
         process.startDetached(action->data().toString(), args);
     });
 
+    windowMenu = menuBar()->addMenu(tr("&Window"));
+    connect(windowMenu, SIGNAL(aboutToShow()), this, SLOT(showMenuWindow()));
+    handyMenu = menuBar()->addMenu(tr("&Handy"));
+    addFilelistToMenu(handyMenu, config.handy);
+
     QMenu* helpMenu = menuBar()->addMenu(tr("&About"));
     helpMenu->addAction(aboutAct);
     helpMenu->addAction(aboutQtAct);
+}
+
+void TabWindow::showMenuWindow()
+{
+    windowMenu->clear();
+    for (int i=0; i<tabWidget->count(); i++)
+    {
+        CodeEditor* editor = dynamic_cast<CodeEditor*>(tabWidget->widget(i));
+        QAction *windowAction = new QAction(editor->fileName, this);
+        windowMenu->addAction(windowAction);
+    }
 }
 
 bool TabWindow::eventFilter(QObject *watched, QEvent *event)

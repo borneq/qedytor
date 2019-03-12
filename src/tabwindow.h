@@ -31,6 +31,7 @@ private:
     bool openOrActivateFile(const QString& fileName);
     void addFilelistToMenu(QMenu* mruMenu, QList<ConfigItem*> &configMru);
     QMenu* mruMenu;
+    QMenu* windowMenu;
     QMenu* handyMenu;
     void closeTab(int index);
     void reReadRepository();
@@ -56,6 +57,7 @@ public slots:
     void onChangedIni();
     void aboutToQuit();
     void properties();
+    void showMenuWindow();
 public:
     explicit TabWindow(QWidget *parent = nullptr);
     void setTab(int n) override;
