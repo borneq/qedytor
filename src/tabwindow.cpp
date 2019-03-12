@@ -364,7 +364,14 @@ void TabWindow::showMenuWindow()
     for (int i=0; i<tabWidget->count(); i++)
     {
         CodeEditor* editor = dynamic_cast<CodeEditor*>(tabWidget->widget(i));
-        QAction *windowAction = new QAction(editor->fileName, this);
+        QChar umpersanded;
+        if (i<9)
+            umpersanded = '1'+i;
+        else if (i==9)
+            umpersanded = '0';
+        else if (i<10+26)
+            umpersanded = 'a'+(i-10);
+        QAction *windowAction = new QAction("&"+QString(umpersanded)+" "+editor->fileName, this);
         windowMenu->addAction(windowAction);
     }
 }
