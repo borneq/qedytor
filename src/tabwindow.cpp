@@ -467,7 +467,7 @@ void TabWindow::closeTab(int index)
 
 void TabWindow::about()
 {
-    QMessageBox::information(nullptr, "About","QEdytor 1.0", QMessageBox::Ok);
+    QMessageBox::information(nullptr, "About","QEdytor {>1.0}", QMessageBox::Ok);
 }
 
 void TabWindow::removeObsoleteMru()

@@ -67,6 +67,15 @@ QString Config::toString(QJsonObject json_obj, QString key)
         return it->toString();
 }
 
+/**
+ * @brief Config::toInt
+ * returns result by reference instead of result because if not
+ * find in json must not change result
+ * @param json_obj
+ * @param key
+ * @param n
+ */
+
 void Config::toInt(QJsonObject json_obj, QString key, int &n)
 {
     QJsonObject::iterator it =json_obj.find(key);
@@ -253,7 +262,7 @@ void ConfigFile::load(QJsonValue v)
     QJsonObject json_obj = v.toObject();
     path = Config::toString(json_obj, "path");
     Config::toInt(json_obj, "row", row);
-    Config::toInt(json_obj, "col", row);
+    Config::toInt(json_obj, "col", col);
     QString longStr = Config::toString(json_obj, "lastEditTime");
     lastEditTime = longStr.toLong();
     longStr = Config::toString(json_obj, "closingTime");
