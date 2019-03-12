@@ -1,0 +1,29 @@
+Contributors welcome!
+
+todo:
+- modified(dirty) editors should be visible that are modified, for example by red title on tabWidget tab
+- should ask when user is closing modified editor
+- now click on red cross on tab close editor and add entry to most recend used (MRU), need catch all other closing editor
+  also closing when program close
+- control + tab - switch between two last tab, maybe list as Visual Studio is
+- tools->properties should be info about word coint, char count, etc.
+- make sort all lines or selected lines
+- open file - default directory as current editor has
+- if user close file, change direcory to not keep old directory
+- save AS
+- save AS crypted .een, save .een
+- sorted Mru and Hadny menus , sorted by last time or alphabetically
+- edit Tool->Config lists
+- when user adds Tool->Config entry - change \ to / and make first letter when second is ":" to uppercase
+- dialog window for add and edit Tool->Config entry 
+- ^l - change word or selected to lowercase, ^u to uppercase, ^k - first letter uppercase, else lowercase 
+- if will error in json, not replace it by empty, only warning
+- re-read file
+- status line: row number and column number
+
+
+todo hisyntax project:
+- Markdown files (*.md) should be like github preview (**bold**, *italic*, <br>, etc..)
+now is yellow text when afer number is space
+(qedytor\hisyntax\data\syntax\markdown.xml) 
+
