@@ -361,6 +361,8 @@ void TabWindow::createMenu()
 void TabWindow::showMenuWindow()
 {
     windowMenu->clear();
+    QActionGroup *windowGroup = new QActionGroup(windowMenu);
+    windowGroup->setExclusive(true);
     for (int i=0; i<tabWidget->count(); i++)
     {
         CodeEditor* editor = dynamic_cast<CodeEditor*>(tabWidget->widget(i));
@@ -371,9 +373,13 @@ void TabWindow::showMenuWindow()
             umpersanded = '0';
         else if (i<10+26)
             umpersanded = 'a'+(i-10);
-        QAction *windowAction = new QAction("&"+QString(umpersanded)+" "+editor->fileName, this);
-        windowMenu->addAction(windowAction);
+        auto action = windowMenu->addAction("&"+QString(umpersanded)+" "+editor->fileName);
+        action->setData(i);
+        windowGroup->addAction(action);
     }
+    connect(windowGroup, &QActionGroup::triggered, this, [this](QAction *action) {
+        tabWidget->setCurrentIndex(action->data().toInt());
+    });
 }
 
 bool TabWindow::eventFilter(QObject *watched, QEvent *event)
