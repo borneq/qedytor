@@ -139,25 +139,25 @@ void Config::saveToFile()
     saveJson(json_obj, configPath);
 }
 
-int Config::findInHandy(ConfigFile *configFile)
+int Config::findInHandy(QString &path)
 {
     for (int i=0; i<handy.size(); i++)
 #ifdef _WIN32
-        if (QString::compare(handy[i]->path, configFile->path, Qt::CaseInsensitive)==0)
+        if (QString::compare(handy[i]->path, path, Qt::CaseInsensitive)==0)
 #else
-        if (handy[i]->path==configFile->path)
+        if (handy[i]->path==path)
 #endif
             return i;
     return -1;
 }
 
-int Config::findInMru(ConfigFile *configFile)
+int Config::findInMru(QString &path)
 {
     for (int i=0; i<mru.size(); i++)
 #ifdef _WIN32
-        if (QString::compare(mru[i]->path, configFile->path, Qt::CaseInsensitive)==0)
+        if (QString::compare(mru[i]->path, path, Qt::CaseInsensitive)==0)
 #else
-        if (mru[i]->path==configFile->path)
+        if (mru[i]->path==path)
 #endif
             return i;
     return -1;
@@ -208,11 +208,11 @@ void Config::addToMru(ConfigFile *configFile)
 
 void Config::addClosedFile(ConfigFile *configFile)
 {
-    int n = findInHandy(configFile);
+    int n = findInHandy(configFile->path);
     if (n>=0)
         replaceInHandy(n, configFile);
     else {
-        n = findInMru(configFile);
+        n = findInMru(configFile->path);
         if (n>=0)
             replaceInMru(n, configFile);
         else {
@@ -243,6 +243,7 @@ void ConfigFile::load(QJsonValue v)
     lastEditTime = longStr.toLong();
     longStr = Config::toString(json_obj, "closingTime");
     closingTime = longStr.toLong();
+    qDebug()<<closingTime;
     syntax = Config::toString(json_obj, "syntax");
     int wordWrapInt;
     Config::toInt(json_obj, "wordWrap", wordWrapInt);

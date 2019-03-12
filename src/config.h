@@ -50,8 +50,6 @@ class Config
     QJsonObject json_obj;
     void json_to_list(const QJsonObject &json_obj, QString valueName, QList<ConfigItem*> &configList);
     void list_to_json(const QList<ConfigItem*> &configList, QString valueName, QJsonObject &json_obj);
-    int findInHandy(ConfigFile *configFile);
-    int findInMru(ConfigFile *configFile);
     void replaceInHandy(int pos, ConfigFile *configFile);
     void replaceInMru(int pos, ConfigFile *configFile);
     int findOldestMru();
@@ -60,6 +58,8 @@ class Config
 public:
     QStringList configEditorHeaders;
     QStringList configFilesHeaders;
+    int findInHandy(QString &path);
+    int findInMru(QString &path);
     Config();
     ~Config();
     void readFromFile();

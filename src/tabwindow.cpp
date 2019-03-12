@@ -419,12 +419,29 @@ void TabWindow::closeTab(int index)
     QWidget *tab = tabWidget->widget(index);
     CodeEditor* editor = dynamic_cast<CodeEditor*>(tab);
     ConfigFile *configFile = new ConfigFile;
+    ConfigFile *existed = nullptr;
+    if (editor->fileName!="")
+    {
+        int n = config.findInHandy(editor->fileName);
+        if (n>=0)
+        {
+            existed = dynamic_cast<ConfigFile*>(config.handy[n]);
+        }
+        else {
+            int n = config.findInMru(editor->fileName);
+            if (n>=0)
+                existed = dynamic_cast<ConfigFile*>(config.mru[n]);
+        }
+    }
+    if (existed)
+        *configFile = *existed;
     configFile->path = editor->fileName;
     configFile->row = editor->textCursor().blockNumber();
     configFile->col = editor->textCursor().positionInBlock();
     QDateTime current = QDateTime::currentDateTime();
     configFile->closingTime = current.toMSecsSinceEpoch() ;
-    configFile->lastEditTime = editor->lastEditTime;
+    if (editor->lastEditTime>0)
+        configFile->lastEditTime = editor->lastEditTime;
     configFile->wordWrap = editor->wordWrapMode()!=QTextOption::NoWrap;
     configFile->syntax = editor->highlighter->definition().name();
     if (editor->fileName!="")
