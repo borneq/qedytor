@@ -29,6 +29,7 @@
 #include "repository.h"
 #include "properties.h"
 #include "codeeditorsidebar.h"
+#include "config.h"
 
 namespace syntaxhl {
     class SyntaxHighlighter;
@@ -77,6 +78,7 @@ public:
     void saveFile(const QString& fileName);
     void findNext(QString textToFind, QTextDocument::FindFlags flags);
     Properties getProperties();
+    void setCorrectCursorPosition(Config &config);
 };
 }
 #endif // CODEEDITOR_H

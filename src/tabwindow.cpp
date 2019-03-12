@@ -116,8 +116,16 @@ bool TabWindow::openOrActivateFile(const QString& aFilePath)
             CodeEditor *editor = qobject_cast<CodeEditor *>(tabWidget->widget(i));
             if (editor->fileName == filePath)
             {
+                QTextCursor text_cursor = editor->textCursor();
+                int row = text_cursor.blockNumber();
+                int col = text_cursor.positionInBlock();
                 editor->openFile(filePath);
                 tabWidget->setCurrentIndex(i);
+                text_cursor = editor->textCursor();
+                QTextBlock text_block = editor->document()->findBlockByLineNumber(row);
+                text_cursor.setPosition(text_block.position()+col);
+                editor->setTextCursor(text_cursor);
+                editor->setFocus();
                 return false;
             }
         }
@@ -126,6 +134,7 @@ bool TabWindow::openOrActivateFile(const QString& aFilePath)
     }
     tabWidget->addTab(newEditor, title);
     tabWidget->setCurrentWidget(newEditor);
+    newEditor->setCorrectCursorPosition(config);
     newEditor->setFocus();
     connect(newEditor, &QPlainTextEdit::textChanged, newEditor, &CodeEditor::onTextChanged);
     return true;

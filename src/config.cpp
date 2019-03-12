@@ -258,7 +258,6 @@ void ConfigFile::load(QJsonValue v)
     lastEditTime = longStr.toLong();
     longStr = Config::toString(json_obj, "closingTime");
     closingTime = longStr.toLong();
-    qDebug()<<closingTime;
     syntax = Config::toString(json_obj, "syntax");
     int wordWrapInt;
     Config::toInt(json_obj, "wordWrap", wordWrapInt);
