@@ -419,20 +419,7 @@ void TabWindow::closeTab(int index)
     QWidget *tab = tabWidget->widget(index);
     CodeEditor* editor = dynamic_cast<CodeEditor*>(tab);
     ConfigFile *configFile = new ConfigFile;
-    ConfigFile *existed = nullptr;
-    if (editor->fileName!="")
-    {
-        int n = config.findInHandy(editor->fileName);
-        if (n>=0)
-        {
-            existed = dynamic_cast<ConfigFile*>(config.handy[n]);
-        }
-        else {
-            int n = config.findInMru(editor->fileName);
-            if (n>=0)
-                existed = dynamic_cast<ConfigFile*>(config.mru[n]);
-        }
-    }
+    ConfigFile *existed = config.cfFindInHandyOrMru(editor->fileName);
     if (existed)
         *configFile = *existed;
     configFile->path = editor->fileName;

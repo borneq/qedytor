@@ -163,6 +163,21 @@ int Config::findInMru(QString &path)
     return -1;
 }
 
+ConfigFile *Config::cfFindInHandyOrMru(QString &path)
+{
+    if (path=="") return nullptr;
+    int n = findInHandy(path);
+    if (n>=0)
+    {
+        return dynamic_cast<ConfigFile*>(handy[n]);
+    }
+    else {
+        int n = findInMru(path);
+        if (n>=0)
+            return dynamic_cast<ConfigFile*>(mru[n]);
+    }
+    return nullptr;
+}
 
 void Config::replaceInHandy(int pos, ConfigFile *configFile)
 {

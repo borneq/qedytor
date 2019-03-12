@@ -60,6 +60,7 @@ public:
     QStringList configFilesHeaders;
     int findInHandy(QString &path);
     int findInMru(QString &path);
+    ConfigFile *cfFindInHandyOrMru(QString &path);
     Config();
     ~Config();
     void readFromFile();
