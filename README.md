@@ -33,3 +33,7 @@ libwinpthread-1.dll<br>
 3.Need config QEdytor.json in c:\Users\USER\.config\ in Windows, or /home/USER/.config in Linux.<br>
 Example config is in qedytor\QEdytor.json <br>
 Make directory with syntax and themes and set it in config file by menu: Tools->Config<br>
+
+Features:<br>
+Alt+1, Alt+2..Alt+0 - choosing tab <br>
+wordWrap,line numbers - from context menu (right mouse) <br>
