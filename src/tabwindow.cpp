@@ -122,7 +122,7 @@ bool TabWindow::openOrActivateFile(const QString& aFilePath)
                 editor->openFile(filePath);
                 tabWidget->setCurrentIndex(i);
                 text_cursor = editor->textCursor();
-                QTextBlock text_block = editor->document()->findBlockByLineNumber(row);
+                QTextBlock text_block = editor->document()->findBlockByNumber(row);
                 text_cursor.setPosition(text_block.position()+col);
                 editor->setTextCursor(text_cursor);
                 editor->setFocus();

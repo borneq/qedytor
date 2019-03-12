@@ -66,7 +66,7 @@ void CodeEditor::setCorrectCursorPosition(Config &config)
         ConfigFile *existed = config.cfFindInHandyOrMru(fileName);
         if (existed)
         {
-            QTextBlock text_block = document()->findBlockByLineNumber(existed->row);
+            QTextBlock text_block = document()->findBlockByNumber(existed->row);
             QTextCursor text_cursor = textCursor();
             text_cursor.setPosition(text_block.position()+existed->col);
             setTextCursor(text_cursor);
