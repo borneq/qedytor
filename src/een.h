@@ -24,6 +24,7 @@ class Een
 public:
     Een();
     QByteArray decrypt(QByteArray &content, std::string password);
+    QByteArray encrypt(QByteArray &content, std::string password);
 };
 }
 #endif // EEN_H

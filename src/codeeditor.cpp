@@ -21,7 +21,9 @@
 #include <QDateTime>
 #include <QInputDialog>
 #include <QLineEdit>
-#include <tabcontrolable.h>
+#include "tabcontrolable.h"
+#include "edytorexception.h"
+
 
 using namespace qedytor;
 
@@ -94,7 +96,13 @@ void CodeEditor::openFile(const QString& fileName)
     {
         Een een;
         QString password = QInputDialog::getText(this, "Crypted", "Get password", QLineEdit::Password);
-        content = een.decrypt(content, password.toStdString());
+        try {
+            content = een.decrypt(content, password.toStdString());
+        } catch (EdytorException &ex) {
+            QMessageBox::critical(nullptr, "Error",ex.what(), QMessageBox::Ok);
+            content.clear();
+        }
+
     }
 
     QString string;

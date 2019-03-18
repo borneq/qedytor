@@ -1,6 +1,7 @@
 #include "een.h"
 #include <hashes/DCPh_md5.h>
 #include <ciphers/DCPc_rijndael.h>
+#include "edytorexception.h"
 
 using namespace qedytor;
 
@@ -31,6 +32,12 @@ QByteArray Een::decrypt(QByteArray &content, std::string password)
     QByteArray decodeText;
     decodeText.resize(int(header.data_size));
     aes.decrypt((uint8_t*)raw.data(),(uint8_t*)(decodeText.data()),numRawBytes);
+    md5.init();
+    md5.update((const unsigned char *)(decodeText.data()), decodeText.length());
+    md5.updateStr(password);
+    md5.final(digest);
+    if (memcmp(digest, header.md5sum, sizeof (header.md5sum))!=0)
+        throw EdytorException("Bad password (check capslock) or invalid file");
     return decodeText;
 }
 
