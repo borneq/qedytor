@@ -59,6 +59,7 @@ private:
     syntaxhl::Repository *m_repositoryRef;
     CodeEditorSidebar *m_sideBar;
     bool eventFilter(QObject *watched, QEvent *event);
+    std::string een_password;
 protected:
     void contextMenuEvent(QContextMenuEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;

@@ -98,9 +98,11 @@ void CodeEditor::openFile(const QString& fileName)
         QString password = QInputDialog::getText(this, "Crypted", "Get password", QLineEdit::Password);
         try {
             content = een.decrypt(content, password.toStdString());
+            een_password = password.toStdString();
         } catch (EdytorException &ex) {
             QMessageBox::critical(nullptr, "Error",ex.what(), QMessageBox::Ok);
             content.clear();
+            een_password = "";
         }
 
     }
@@ -174,17 +176,32 @@ void CodeEditor::saveFile(const QString& fileName)
             return;
         }
     }
-    QFile f(fileName);
-    if (!f.open(QFile::WriteOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open" << fileName << ":" << f.errorString();
-        return;
-    }
-    if (saveUtfKind==UtfKind::Bom)
+    QRegExp rx("*.een");
+    rx.setPatternSyntax(QRegExp::Wildcard);
+    if (rx.exactMatch(fileName))
     {
-        QByteArray bom =  QByteArrayLiteral("\xef\xbb\xbf");
-        f.write(bom);
+        Een een;
+        content = een.encrypt(content, een_password);
+        QFile f(fileName);
+        if (!f.open(QFile::WriteOnly)) {
+            qWarning() << "Failed to open" << fileName << ":" << f.errorString();
+            return;
+        }
+        f.write(content);
     }
-    f.write(content);
+    else {
+        QFile f(fileName);
+        if (!f.open(QFile::WriteOnly | QIODevice::Text)) {
+            qWarning() << "Failed to open" << fileName << ":" << f.errorString();
+            return;
+        }
+        if (saveUtfKind==UtfKind::Bom)
+        {
+            QByteArray bom =  QByteArrayLiteral("\xef\xbb\xbf");
+            f.write(bom);
+        }
+        f.write(content);
+    }
     loadUtfKind = saveUtfKind;
 }
 

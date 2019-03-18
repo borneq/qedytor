@@ -11,7 +11,7 @@ todo:
 - open file - default directory as current editor has
 - if user close file, change direcory to not keep old directory
 - save AS
-- save AS crypted .een, save .een
+- save AS crypted .een
 - sorted Mru and Hadny menus , sorted by last time or alphabetically
 - edit Tool->Config lists
 - when user adds Tool->Config entry - change \ to / and make first letter when second is ":" to uppercase
