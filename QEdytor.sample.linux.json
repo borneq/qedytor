@@ -61,7 +61,7 @@
             "closingTime": "0",
             "col": 1,
             "lastEditTime": "0",
-            "path": "C:/Users/boruc/.config/QEdytor.json",
+            "path": "C:/Users/boruc/.config/qedytor/QEdytor.json",
             "row": 0,
             "syntax": "JSON",
             "wordWrap": 1
@@ -69,10 +69,10 @@
     ],
     "otherEditors": [
         {
-            "name": "editas.exe",
-            "path": "D:/wazne/myprog/editas.exe"
+            "name": "xed",
+            "path": "xed"
         }
     ],
-    "pathToSyntax": "C:\\Users\\boruc\\.config\\syntax",
-    "pathToThemes": "C:\\Users\\boruc\\.config\\themes"
+    "pathToSyntax": "/home/andrzej-borucki/.config/qedytor/syntax",
+    "pathToThemes": "/home/andrzej-borucki/.config/qedytor/themes"
 }

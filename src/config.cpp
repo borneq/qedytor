@@ -25,7 +25,7 @@ Config::~Config()
 QString Config::findPath()
 {
     QDir homeDir(QDir::homePath());
-    QDir homeConfigDir = homeDir.filePath(".config");
+    QDir homeConfigDir = homeDir.filePath(".config/qedytor");
     QString homeConfigPath = homeConfigDir.filePath(configName);
     configPath = homeConfigPath;
     QFileInfo fiHome(homeConfigPath);

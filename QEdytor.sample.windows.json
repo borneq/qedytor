@@ -1,0 +1,78 @@
+{
+    "geometry": "01d9d0cb0003000000000146000000aa0000058f0000034500000146000000aa0000058f000003450000000000000000078000000146000000aa0000058f00000345",
+    "handyFiles": [
+        {
+            "closingTime": "0",
+            "col": 1,
+            "lastEditTime": "0",
+            "path": "D:/wazne/teksty_een/spostrzezenia.txt",
+            "row": 1,
+            "syntax": "None",
+            "wordWrap": 1
+        },
+        {
+            "closingTime": "0",
+            "col": 1,
+            "lastEditTime": "0",
+            "path": "D:/wazne/teksty_een/zakupy/zakupy.txt",
+            "row": 1,
+            "syntax": "None",
+            "wordWrap": 1
+        },
+        {
+            "closingTime": "0",
+            "col": 1,
+            "lastEditTime": "0",
+            "path": "D:/wazne/github_my/qteditor_todo.txt",
+            "row": 1,
+            "syntax": "None",
+            "wordWrap": 1
+        },
+        {
+            "closingTime": "0",
+            "col": 1,
+            "lastEditTime": "0",
+            "path": "D:/konta/konta.txt",
+            "row": 1,
+            "syntax": "None",
+            "wordWrap": 1
+        },
+        {
+            "closingTime": "0",
+            "col": 1,
+            "lastEditTime": "0",
+            "path": "D:/wazne/teksty_een/net/grupy/sended.txt",
+            "row": 1,
+            "syntax": "",
+            "wordWrap": 1
+        }
+    ],
+    "mruFiles": [
+        {
+            "closingTime": "0",
+            "col": 1,
+            "lastEditTime": "0",
+            "path": "D:/wazne/gitlab/my_cs/Algorytm/Sudoku/Sudoku/board.dat",
+            "row": 1,
+            "syntax": "Hunspell Thesaurus File",
+            "wordWrap": 1
+        },
+        {
+            "closingTime": "0",
+            "col": 1,
+            "lastEditTime": "0",
+            "path": "C:/Users/boruc/.config/qedytor/QEdytor.json",
+            "row": 0,
+            "syntax": "JSON",
+            "wordWrap": 1
+        }
+    ],
+    "otherEditors": [
+        {
+            "name": "editas.exe",
+            "path": "D:/wazne/myprog/editas.exe"
+        }
+    ],
+    "pathToSyntax": "C:\\Users\\boruc\\.config\\qedytor\\syntax",
+    "pathToThemes": "C:\\Users\\boruc\\.config\\qedytor\\themes"
+}
