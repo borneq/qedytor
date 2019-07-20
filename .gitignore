@@ -1,4 +1,7 @@
 bin/
+.vs/
+Debug/
+Release/
 *.o
 build-*-Debug/
 build-*-Release/
