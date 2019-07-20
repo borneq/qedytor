@@ -1,6 +1,3 @@
-[submodule "DCPCryptCpp"]
-	path = DCPCryptCpp
-	url = https://github.com/borneq/DCPCryptCpp
 [submodule "hisyntax"]
 	path = hisyntax
 	url = https://github.com/borneq/hisyntax
