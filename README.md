@@ -4,7 +4,7 @@ because it uses:<br>
 https://github.com/borneq/hisyntax<br>
 https://github.com/borneq/DCPCryptCpp<br>
 2. Next 
-WINDOWS: call win_build_gcc.bat with path modification
+WINDOWS: call gcc_build.bat with path modification
 else
 go to DCPCryptCpp directory, create "build" directory and go to this build directory.<br>
 Command [cmake .. ] in Linux will create makefile, but in Windows ["c:\Program Files\CMake\bin\cmake.exe" ..]
