@@ -6,6 +6,16 @@ requires(qtConfig(listwidget))
 include(../SingleApplication/qtsingleapplication.pri)
 
 HEADERS       += \
+    crypt/blockcipher.h \
+    crypt/blockcipher128.h \
+    crypt/cipher.h \
+    crypt/exception.h \
+    crypt/hash.h \
+    crypt/md5.h \
+    crypt/rijndael.h \
+    crypt/rijndael_tabs.h \
+    crypt/sha3.h \
+    crypt/util.h \
     tabwindow.h \
     codeeditor.h \
     een.h \
@@ -21,6 +31,13 @@ HEADERS       += \
     codeeditorsidebar.h \
     configtableview.h
 SOURCES       += main.cpp \
+    crypt/blockcipher.cpp \
+    crypt/blockcipher128.cpp \
+    crypt/cipher.cpp \
+    crypt/md5.cpp \
+    crypt/rijndael.cpp \
+    crypt/sha3.cpp \
+    crypt/util.cpp \
     tabwindow.cpp \
     codeeditor.cpp \
     een.cpp \
@@ -48,10 +65,3 @@ else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/..
 else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../bin/hisyntax.lib
 else:unix: PRE_TARGETDEPS += $$PWD/../bin/libhisyntax.a
 
-unix|win32: LIBS += -L$$PWD/../bin/ -ldcpcrypt
-
-INCLUDEPATH += $$PWD/../DCPCryptCpp
-DEPENDPATH += $$PWD/../DCPCryptCpp
-
-win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../bin/dcpcrypt.lib
-else:unix|win32-g++: PRE_TARGETDEPS += $$PWD/../bin/libdcpcrypt.a

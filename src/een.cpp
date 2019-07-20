@@ -1,6 +1,6 @@
 #include "een.h"
-#include <hashes/DCPh_md5.h>
-#include <ciphers/DCPc_rijndael.h>
+#include "crypt/md5.h"
+#include "crypt/rijndael.h"
 #include "edytorexception.h"
 
 using namespace qedytor;
@@ -22,8 +22,8 @@ QByteArray Een::decrypt(QByteArray &content, std::string password)
         || header.data_size > int64_t(numRawBytes))
         throw EdytorException("Bad EEN file (or other version)");
     QByteArray raw = content.mid(sizeof(EenHeader), int(header.data_size));
-    dcpcrypt::DCPh_md5 md5;
-    dcpcrypt::DCPc_rijndael aes;
+    crypt::Md5 md5;
+    crypt::Rijndael aes;
     md5.init();
     md5.updateStr(password);
     unsigned char digest[128/8];
@@ -49,7 +49,7 @@ QByteArray Een::encrypt(QByteArray &content, std::string password)
     header.cipher = ecRijndael;
     header.data_size = content.length();
     header.header_version = 0;
-    dcpcrypt::DCPh_md5 md5;
+    crypt::Md5 md5;
     md5.init();
     md5.update((const unsigned char *)(content.data()), content.length());
     md5.updateStr(password);
@@ -58,7 +58,7 @@ QByteArray Een::encrypt(QByteArray &content, std::string password)
     md5.updateStr(password);
     unsigned char digest[128/8];
     md5.final(digest);
-    dcpcrypt::DCPc_rijndael aes;
+    crypt::Rijndael aes;
     aes.init(digest, sizeof(digest)*8, nullptr);
     QByteArray encodedText;
     encodedText.resize(sizeof(header) + int(header.data_size));
