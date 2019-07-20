@@ -34,7 +34,7 @@ HEADERS += \
 FORMS += \
         mainwindow.ui
 
-unix|win32: LIBS += -L$$PWD/../../bin/ -ldcpcrypt
+unix|win32: LIBS += -L$$PWD/../../bin/ -largon2
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

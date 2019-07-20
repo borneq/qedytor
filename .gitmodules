@@ -1,3 +1,6 @@
 [submodule "hisyntax"]
 	path = hisyntax
 	url = https://github.com/borneq/hisyntax
+[submodule "phc-winner-argon2"]
+	path = phc-winner-argon2
+	url = https://github.com/borneq/phc-winner-argon2.git

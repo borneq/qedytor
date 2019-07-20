@@ -2,18 +2,15 @@
 git clone --recurse-submodules https://github.com/borneq/qedytor.git<br>
 because it uses:<br>
 https://github.com/borneq/hisyntax<br>
-https://github.com/borneq/DCPCryptCpp<br>
+https://github.com/borneq/phc-winner-argon2.git<br>
 2. Next 
-WINDOWS: call gcc_build.bat with path modification
-else
-go to DCPCryptCpp directory, create "build" directory and go to this build directory.<br>
+go to phc-winner-argon2.git directory, create "build" directory and go to this build directory.<br>
 Command [cmake .. ] in Linux will create makefile, but in Windows ["c:\Program Files\CMake\bin\cmake.exe" ..]
-this will create Visual Studio 
-project if is any VS installed. <br>
+this will create Visual Studio project if is any VS installed. <br>
 But we tested with MinGW in Windows, therefore need call [cmake .. -G "MinGW Makefiles"]<br>
 first add gcc to path, for example d:\Qt\Qt5.12.0\Tools\mingw730_64\bin\ directory.
 next call make , for Linux is enough type "make".<br>
-3.libdcpcrypt.a move/copy from build directory to bin, after creating "bin" in qedytor.<br>
+3.libargon2.a move/copy from build directory to bin, after creating "bin" in qedytor.<br>
 4.Go to hisyntax directory and run Qt Creator with qedytor\hisyntax\src\hisyntax.pro 
 config it (in Windows was tested with MinGW) build release or debug version.<br>
 5.Copy qedytor\hisyntax\build-hisyntax-Desktop_Qt_5_12_0_MinGW_64_bit-Release\release\libhisyntax.a 
