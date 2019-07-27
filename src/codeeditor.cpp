@@ -45,15 +45,16 @@ CodeEditor::CodeEditor(syntaxhl::Repository *repository,QString name, QWidget *p
     connect(this, &QPlainTextEdit::updateRequest, this, &CodeEditor::updateSidebarArea);
     connect(this, &QPlainTextEdit::cursorPositionChanged, this, &CodeEditor::highlightCurrentLine);
     connect(this, &QPlainTextEdit::cursorPositionChanged, this, &CodeEditor::updateStatusBar);
+    connect(this, &QPlainTextEdit::textChanged, this, &CodeEditor::updateStatusBar);
 
     m_statusBar->setStyleSheet("border-top: 1px solid lightgray");
     m_statusBar->setSizeGripEnabled(false);
     statusLabel1 = new QLabel(this);
     statusLabel1->setMinimumWidth(100);
-    m_statusBar->addPermanentWidget(statusLabel1);
+    m_statusBar->addWidget(statusLabel1);
     statusLabel2 = new QLabel(this);
     statusLabel2->setMinimumWidth(100);
-    m_statusBar->addPermanentWidget(statusLabel2);
+    m_statusBar->addWidget(statusLabel2);
     statusLabel0 = new QLabel(this);
     statusLabel0->setMinimumWidth(10);
     m_statusBar->addWidget(statusLabel0, 1);
@@ -202,6 +203,8 @@ void CodeEditor::saveFile(const QString& fileName)
             return;
         }
         f.write(content);
+        document()->setModified(false);
+        updateStatusBar();
     }
     else {
         QFile f(fileName);
@@ -215,6 +218,8 @@ void CodeEditor::saveFile(const QString& fileName)
             f.write(bom);
         }
         f.write(content);
+        document()->setModified(false);
+        updateStatusBar();
     }
     loadUtfKind = saveUtfKind;
 }
@@ -505,8 +510,11 @@ void CodeEditor::updateStatusBar()
 {
     const QTextBlock block = textCursor().block();
     const int relativePos = textCursor().position() - block.position();
-    statusLabel1->setText(QString::number(block.blockNumber()+1));
-    statusLabel2->setText(QString::number(relativePos+1));
+    statusLabel1->setText(QString::number(block.blockNumber()+1)+":"+QString::number(relativePos+1));
+    if (document()->isModified())
+        statusLabel2->setText("*");
+    else
+        statusLabel2->setText("");
 }
 
 QTextBlock CodeEditor::blockAtPosition(int y) const
