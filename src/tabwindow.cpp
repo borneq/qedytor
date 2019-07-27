@@ -132,6 +132,9 @@ bool TabWindow::openOrActivateFile(const QString& aFilePath)
         }
         newEditor = new CodeEditor(repository, filePath, this);
         newEditor->openFile(filePath);
+        int n = config.findInMru(filePath);
+        if (n>=0)
+            config.removeMru(n);
     }
     tabWidget->addTab(newEditor, title);
     tabWidget->setCurrentWidget(newEditor);
@@ -524,6 +527,7 @@ void TabWindow::closeTab(int index)
     delete tab;
     tab = nullptr;
     setWindowTitle("");
+    config.saveToFile();
 }
 
 

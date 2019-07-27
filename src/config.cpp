@@ -215,6 +215,12 @@ int Config::findOldestMru()
     return oldestPos;
 }
 
+void Config::removeMru(int n)
+{
+    delete mru[n];
+    mru.removeAt(n);
+}
+
 void Config::removeOldestMru()
 {
     for (int i=mru.size()-1; i>=maxMRU; i--)
