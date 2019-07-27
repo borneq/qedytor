@@ -26,6 +26,8 @@
 
 #include <QPlainTextEdit>
 #include <QWidget>
+#include <QStatusBar>
+#include <QLabel>
 #include "repository.h"
 #include "properties.h"
 #include "codeeditorsidebar.h"
@@ -46,7 +48,7 @@ private:
     void setTheme(const syntaxhl::Theme &theme);
     int sidebarWidth() const;
     void sidebarPaintEvent(QPaintEvent *event);
-    void updateSidebarGeometry();
+    void updateBarsGeometry();
     void updateSidebarArea(const QRect &rect, int dy);
     void highlightCurrentLine();
 
@@ -58,8 +60,12 @@ private:
 
     syntaxhl::Repository *m_repositoryRef;
     CodeEditorSidebar *m_sideBar;
+    QStatusBar *m_statusBar;
     bool eventFilter(QObject *watched, QEvent *event);
     std::string een_password;
+    QLabel *statusLabel0;
+    QLabel *statusLabel1;
+    QLabel *statusLabel2;
 protected:
     void contextMenuEvent(QContextMenuEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;

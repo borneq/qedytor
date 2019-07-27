@@ -21,6 +21,7 @@
 #include <QDateTime>
 #include <QInputDialog>
 #include <QLineEdit>
+#include <QScrollBar>
 #include "tabcontrolable.h"
 #include "edytorexception.h"
 
@@ -30,7 +31,8 @@ using namespace qedytor;
 CodeEditor::CodeEditor(syntaxhl::Repository *repository,QString name, QWidget *parent):  QPlainTextEdit(parent),
     m_repositoryRef(repository),
     highlighter(new syntaxhl::SyntaxHighlighter(document())),
-    m_sideBar(new CodeEditorSidebar(this))
+    m_sideBar(new CodeEditorSidebar(this)),
+    m_statusBar(new QStatusBar(this))
 {
     this->fileName = name;
     setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
@@ -39,11 +41,22 @@ CodeEditor::CodeEditor(syntaxhl::Repository *repository,QString name, QWidget *p
         ? m_repositoryRef->defaultTheme(syntaxhl::Repository::DarkTheme)
         : m_repositoryRef->defaultTheme(syntaxhl::Repository::LightTheme));
 
-    connect(this, &QPlainTextEdit::blockCountChanged, this, &CodeEditor::updateSidebarGeometry);
+    connect(this, &QPlainTextEdit::blockCountChanged, this, &CodeEditor::updateBarsGeometry);
     connect(this, &QPlainTextEdit::updateRequest, this, &CodeEditor::updateSidebarArea);
     connect(this, &QPlainTextEdit::cursorPositionChanged, this, &CodeEditor::highlightCurrentLine);
 
-    updateSidebarGeometry();
+    m_statusBar->setStyleSheet("border-top: 1px solid lightgray");
+    m_statusBar->setSizeGripEnabled(false);
+    statusLabel1 = new QLabel(this);
+    statusLabel1->setMinimumWidth(100);
+    m_statusBar->addPermanentWidget(statusLabel1);
+    statusLabel2 = new QLabel(this);
+    statusLabel2->setMinimumWidth(100);
+    m_statusBar->addPermanentWidget(statusLabel2);
+    statusLabel0 = new QLabel(this);
+    statusLabel0->setMinimumWidth(10);
+    m_statusBar->addWidget(statusLabel0, 1);
+    updateBarsGeometry();
     highlightCurrentLine();
     installEventFilter(this);
 }
@@ -228,7 +241,7 @@ void CodeEditor::contextMenuEvent(QContextMenuEvent *event)
     connect(action, &QAction::changed, this,
             [this,action]() {
                     showLineNumbers = action->isChecked();
-                    updateSidebarGeometry();
+                    updateBarsGeometry();
                 });
     action->setEnabled(true);
     menu->addAction(action);
@@ -368,7 +381,7 @@ void CodeEditor::contextMenuEvent(QContextMenuEvent *event)
 void CodeEditor::resizeEvent(QResizeEvent *event)
 {
     QPlainTextEdit::resizeEvent(event);
-    updateSidebarGeometry();
+    updateBarsGeometry();
 }
 
 void CodeEditor::setTheme(const syntaxhl::Theme &theme)
@@ -452,11 +465,16 @@ void CodeEditor::sidebarPaintEvent(QPaintEvent *event)
     }
 }
 
-void CodeEditor::updateSidebarGeometry()
+void CodeEditor::updateBarsGeometry()
 {
-    setViewportMargins(sidebarWidth(), 0, 0, 0);
+    const int StatusH = 20;
+    setViewportMargins(sidebarWidth(), 0, 0, StatusH);
     const auto r = contentsRect();
     m_sideBar->setGeometry(QRect(r.left(), r.top(), sidebarWidth(), r.height()));
+    if (verticalScrollBar()->isVisible())
+        m_statusBar->setGeometry(QRect(r.left(), r.top()+r.height()-StatusH, r.width()-verticalScrollBar()->width(), StatusH));
+    else
+        m_statusBar->setGeometry(QRect(r.left(), r.top()+r.height()-StatusH, r.width(), StatusH));
 }
 
 void CodeEditor::updateSidebarArea(const QRect& rect, int dy)
