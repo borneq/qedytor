@@ -51,6 +51,7 @@ private:
     void updateBarsGeometry();
     void updateSidebarArea(const QRect &rect, int dy);
     void highlightCurrentLine();
+    void updateStatusBar();
 
     QTextBlock blockAtPosition(int y) const;
     bool isFoldable(const QTextBlock &block) const;

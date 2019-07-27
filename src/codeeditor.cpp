@@ -44,6 +44,7 @@ CodeEditor::CodeEditor(syntaxhl::Repository *repository,QString name, QWidget *p
     connect(this, &QPlainTextEdit::blockCountChanged, this, &CodeEditor::updateBarsGeometry);
     connect(this, &QPlainTextEdit::updateRequest, this, &CodeEditor::updateSidebarArea);
     connect(this, &QPlainTextEdit::cursorPositionChanged, this, &CodeEditor::highlightCurrentLine);
+    connect(this, &QPlainTextEdit::cursorPositionChanged, this, &CodeEditor::updateStatusBar);
 
     m_statusBar->setStyleSheet("border-top: 1px solid lightgray");
     m_statusBar->setSizeGripEnabled(false);
@@ -498,6 +499,14 @@ void CodeEditor::highlightCurrentLine()
     QList<QTextEdit::ExtraSelection> extraSelections;
     extraSelections.append(selection);
     setExtraSelections(extraSelections);
+}
+
+void CodeEditor::updateStatusBar()
+{
+    const QTextBlock block = textCursor().block();
+    const int relativePos = textCursor().position() - block.position();
+    statusLabel1->setText(QString::number(block.blockNumber()+1));
+    statusLabel2->setText(QString::number(relativePos+1));
 }
 
 QTextBlock CodeEditor::blockAtPosition(int y) const
