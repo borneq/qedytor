@@ -30,7 +30,13 @@ private:
     bool eventFilter(QObject *watched, QEvent *event);
     bool openOrActivateFile(const QString& fileName);
     void addFilelistToMenu(QMenu* mruMenu, QList<ConfigItem*> &configMru);
+    QAction *newAction;
+    QAction *openAction;
+    QAction *closeAction;
+    QAction *saveAction;
+    QAction *exitAction;
     QMenu* mruMenu;
+    QMenu* fileMenu;
     QMenu* windowMenu;
     QMenu* handyMenu;
     void closeTab(int index);
@@ -58,6 +64,7 @@ public slots:
     void aboutToQuit();
     void properties();
     void showMenuWindow();
+    void showMenuFile();
 public:
     explicit TabWindow(QWidget *parent = nullptr);
     void setTab(int n) override;

@@ -269,15 +269,15 @@ void TabWindow::onChangedIni()
 
 void TabWindow::createMenu()
 {
-    QAction *newAction = new QAction(tr("New"), this);
+    newAction = new QAction(tr("New"), this);
     newAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_N));
-    QAction *openAction = new QAction(tr("Open file..."), this);
-    QAction *saveAction = new QAction(tr("Save"), this);
+    openAction = new QAction(tr("Open file..."), this);
+    saveAction = new QAction(tr("Save"), this);
     saveAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
-    QAction *exitAction = new QAction(tr("Exit"), this);
+    exitAction = new QAction(tr("Exit"), this);
     QAction *aboutAct = new QAction(tr("About"), this);
     QAction *aboutQtAct = new QAction(tr("About Qt"), this);
-    QAction *closeAction = new QAction("Close", this);
+    closeAction = new QAction("Close", this);
     closeAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_F4));
     QAction *configAction = new QAction("Config", this);
     QAction *insertDateAction = new QAction("Insert &date", this);
@@ -318,13 +318,8 @@ void TabWindow::createMenu()
     connect(findPrevAction, SIGNAL(triggered()), this, SLOT(findPrev()));
     connect(propertiesAction, SIGNAL(triggered()), this, SLOT(properties()));
 
-    QMenu* fileMenu = menuBar()->addMenu(tr("&File"));
-    fileMenu->addAction(newAction);
-    fileMenu->addAction(openAction);
-    fileMenu->addAction(saveAction);
-    fileMenu->addAction(closeAction);
-    fileMenu->addSeparator();
-    fileMenu->addAction(exitAction);
+    fileMenu = menuBar()->addMenu(tr("&File"));
+    connect(fileMenu, SIGNAL(aboutToShow()), this, SLOT(showMenuFile()));
     QMenu* searchMenu = menuBar()->addMenu(tr("&Search"));
     searchMenu->addAction(findAction);
     searchMenu->addAction(findNextAction);
@@ -334,12 +329,6 @@ void TabWindow::createMenu()
     toolsMenu->addAction(insertDateAction);
     toolsMenu->addAction(insertTimeAction);
     toolsMenu->addAction(propertiesAction);
-
-    mruMenu = menuBar()->addMenu(tr("&Mru"));
-    addFilelistToMenu(mruMenu, config.mru);
-    mruMenu->addSeparator();
-    auto removeObsoleteAction = mruMenu->addAction("Remove obsolete");
-    connect(removeObsoleteAction, SIGNAL(triggered()), this, SLOT(removeObsoleteMru()));
 
     QMenu *menuOthers = menuBar()->addMenu(tr("&Other editors"));
     auto othersGroup = new QActionGroup(menuOthers);
@@ -390,6 +379,24 @@ void TabWindow::showMenuWindow()
     connect(windowGroup, &QActionGroup::triggered, this, [this](QAction *action) {
         tabWidget->setCurrentIndex(action->data().toInt());
     });
+}
+
+void TabWindow::showMenuFile()
+{
+    fileMenu->clear();
+    fileMenu->addAction(newAction);
+    fileMenu->addAction(openAction);
+    QMenu *mruMenu = fileMenu->addMenu(tr("&Recent files"));
+    addFilelistToMenu(mruMenu, config.mru);
+    mruMenu->addSeparator();
+    auto removeObsoleteAction = mruMenu->addAction("Remove obsolete");
+    connect(removeObsoleteAction, SIGNAL(triggered()), this, SLOT(removeObsoleteMru()));
+    QMenu *mruNamesMenu = fileMenu->addMenu(tr("&According to name"));
+    QMenu *mruPathesMenu = fileMenu->addMenu(tr("&According to path"));
+    fileMenu->addAction(saveAction);
+    fileMenu->addAction(closeAction);
+    fileMenu->addSeparator();
+    fileMenu->addAction(exitAction);
 }
 
 bool TabWindow::eventFilter(QObject *watched, QEvent *event)
@@ -481,11 +488,6 @@ void TabWindow::removeObsoleteMru()
             newList.append(config.mru[i]);
     }
     config.mru = newList;
-    mruMenu->clear();
-    addFilelistToMenu(mruMenu, config.mru);
-    mruMenu->addSeparator();
-    auto removeObsoleteAction = mruMenu->addAction("Remove obsolete");
-    connect(removeObsoleteAction, SIGNAL(triggered()), this, SLOT(removeObsoleteMru()));
 }
 
 void TabWindow::setTab(int n)
