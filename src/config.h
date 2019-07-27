@@ -9,11 +9,11 @@
 namespace qedytor {
 class Config;
 
-enum class SortBy {lastEditTime,closingTime,path,name,original};
+enum class SortBy {original, lastEditTime, closingTime, path, name};
 
 struct ConfigFile: public ConfigItem
 {
-    int row = 0 ;
+    int row = 0;
     int col = 0;
     qint64 lastEditTime = 0;
     qint64 closingTime = 0;

@@ -141,14 +141,59 @@ bool TabWindow::openOrActivateFile(const QString& aFilePath)
     return true;
 }
 
-void TabWindow::addFilelistToMenu(QMenu* menu, QList<ConfigItem*> &configlist)
+bool lessThanLastEditTime(const ConfigItem *it1, const ConfigItem *it2)
 {
+    ConfigFile *f1 = (ConfigFile*)it1;
+    ConfigFile *f2 = (ConfigFile*)it2;
+    if (f1->lastEditTime==f2->lastEditTime)
+        return f1->path < f2->path;
+    else
+        return f1->lastEditTime > f2->lastEditTime;
+}
+
+bool lessThanClosingTime(const ConfigItem *it1, const ConfigItem *it2)
+{
+    ConfigFile *f1 = (ConfigFile*)it1;
+    ConfigFile *f2 = (ConfigFile*)it2;
+    if (f1->closingTime==f2->closingTime)
+        return f1->path < f2->path;
+    else
+        return f1->closingTime > f2->closingTime;
+}
+
+bool lessThanPath(const ConfigItem *it1, const ConfigItem *it2)
+{
+    ConfigFile *f1 = (ConfigFile*)it1;
+    ConfigFile *f2 = (ConfigFile*)it2;
+    return f1->path < f2->path;
+}
+
+bool lessThanName(const ConfigItem *it1, const ConfigItem *it2)
+{
+    ConfigFile *f1 = (ConfigFile*)it1;
+    ConfigFile *f2 = (ConfigFile*)it2;
+    if (f1->name == f2->name)
+        return f1->path < f2->path;
+    else
+        return f1->name < f2->name;
+}
+
+void TabWindow::addFilelistToMenu(QMenu* menu, QList<ConfigItem*> &configlist, SortBy sortBy)
+{
+    QList<ConfigItem*> sortedList = configlist;
+    switch (sortBy)
+    {
+        case(SortBy::name): std::sort(sortedList.begin(), sortedList.end(), lessThanName); break;
+        case(SortBy::path): std::sort(sortedList.begin(), sortedList.end(), lessThanPath); break;
+        case(SortBy::closingTime): std::sort(sortedList.begin(), sortedList.end(), lessThanClosingTime); break;
+        case(SortBy::lastEditTime): std::sort(sortedList.begin(), sortedList.end(), lessThanLastEditTime); break;
+    }
     auto mruGroup = new QActionGroup(menu);
     mruGroup->setExclusive(true);
-    for (int i=0; i<configlist.size(); i++)
+    for (int i=0; i<sortedList.size(); i++)
     {
-        auto action = menu->addAction(configlist[i]->path);
-        action->setData(configlist[i]->path);
+        auto action = menu->addAction(sortedList[i]->path);
+        action->setData(sortedList[i]->path);
         mruGroup->addAction(action);
     }
     connect(mruGroup, &QActionGroup::triggered, this, [this](QAction *action) {
@@ -350,7 +395,7 @@ void TabWindow::createMenu()
     windowMenu = menuBar()->addMenu(tr("&Window"));
     connect(windowMenu, SIGNAL(aboutToShow()), this, SLOT(showMenuWindow()));
     handyMenu = menuBar()->addMenu(tr("&Handy"));
-    addFilelistToMenu(handyMenu, config.handy);
+    addFilelistToMenu(handyMenu, config.handy, SortBy::closingTime);
 
     QMenu* helpMenu = menuBar()->addMenu(tr("&About"));
     helpMenu->addAction(aboutAct);
@@ -387,12 +432,14 @@ void TabWindow::showMenuFile()
     fileMenu->addAction(newAction);
     fileMenu->addAction(openAction);
     QMenu *mruMenu = fileMenu->addMenu(tr("&Recent files"));
-    addFilelistToMenu(mruMenu, config.mru);
+    addFilelistToMenu(mruMenu, config.mru, SortBy::closingTime);
     mruMenu->addSeparator();
     auto removeObsoleteAction = mruMenu->addAction("Remove obsolete");
     connect(removeObsoleteAction, SIGNAL(triggered()), this, SLOT(removeObsoleteMru()));
     QMenu *mruNamesMenu = fileMenu->addMenu(tr("&According to name"));
+    addFilelistToMenu(mruNamesMenu, config.mru, SortBy::name);
     QMenu *mruPathesMenu = fileMenu->addMenu(tr("&According to path"));
+    addFilelistToMenu(mruPathesMenu, config.mru, SortBy::path);
     fileMenu->addAction(saveAction);
     fileMenu->addAction(closeAction);
     fileMenu->addSeparator();
@@ -461,15 +508,6 @@ void TabWindow::closeTab(int index)
     delete tab;
     tab = nullptr;
     setWindowTitle("");
-
-    mruMenu->clear();
-    addFilelistToMenu(mruMenu, config.mru);
-    mruMenu->addSeparator();
-    auto removeObsoleteAction = mruMenu->addAction("Remove obsolete");
-    connect(removeObsoleteAction, SIGNAL(triggered()), this, SLOT(removeObsoleteMru()));
-
-    handyMenu->clear();
-    addFilelistToMenu(handyMenu, config.handy);
 }
 
 

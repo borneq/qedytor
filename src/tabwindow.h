@@ -29,7 +29,7 @@ private:
     bool tabControlPressed = false;
     bool eventFilter(QObject *watched, QEvent *event);
     bool openOrActivateFile(const QString& fileName);
-    void addFilelistToMenu(QMenu* mruMenu, QList<ConfigItem*> &configMru);
+    void addFilelistToMenu(QMenu* mruMenu, QList<ConfigItem*> &configMru, SortBy sortBy);
     QAction *newAction;
     QAction *openAction;
     QAction *closeAction;
