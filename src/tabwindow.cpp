@@ -1,13 +1,14 @@
+#include <definition.h>
+#include <iostream>
 #include <QtWidgets>
+#include <QKeyEvent>
+#include <QTextDocument>
+#include <QStatusBar>
+#include <synexception.h>
+#include <syntaxhighlighter.h>
 #include "tabwindow.h"
 #include "codeeditor.h"
 #include "edytorexception.h"
-#include <syntaxhighlighter.h>
-#include <definition.h>
-#include <iostream>
-#include <QKeyEvent>
-#include <QTextDocument>
-#include <synexception.h>
 
 using namespace qedytor;
 
