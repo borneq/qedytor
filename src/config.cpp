@@ -270,9 +270,9 @@ void ConfigFile::load(QJsonValue v)
     Config::toInt(json_obj, "row", row);
     Config::toInt(json_obj, "col", col);
     QString longStr = Config::toString(json_obj, "lastEditTime");
-    lastEditTime = longStr.toLong();
+    lastEditTime = longStr.toLongLong();
     longStr = Config::toString(json_obj, "closingTime");
-    closingTime = longStr.toLong();
+    closingTime = longStr.toLongLong();
     syntax = Config::toString(json_obj, "syntax");
     int wordWrapInt;
     Config::toInt(json_obj, "wordWrap", wordWrapInt);
