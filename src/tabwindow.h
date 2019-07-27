@@ -65,6 +65,7 @@ public slots:
     void properties();
     void showMenuWindow();
     void showMenuFile();
+    void showMenuHandy();
 public:
     explicit TabWindow(QWidget *parent = nullptr);
     void setTab(int n) override;

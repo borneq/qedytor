@@ -394,8 +394,9 @@ void TabWindow::createMenu()
 
     windowMenu = menuBar()->addMenu(tr("&Window"));
     connect(windowMenu, SIGNAL(aboutToShow()), this, SLOT(showMenuWindow()));
+
     handyMenu = menuBar()->addMenu(tr("&Handy"));
-    addFilelistToMenu(handyMenu, config.handy, SortBy::closingTime);
+    connect(handyMenu, SIGNAL(aboutToShow()), this, SLOT(showMenuHandy()));
 
     QMenu* helpMenu = menuBar()->addMenu(tr("&About"));
     helpMenu->addAction(aboutAct);
@@ -444,6 +445,21 @@ void TabWindow::showMenuFile()
     fileMenu->addAction(closeAction);
     fileMenu->addSeparator();
     fileMenu->addAction(exitAction);
+}
+
+void TabWindow::showMenuHandy()
+{
+    handyMenu->clear();
+    QMenu *lastClosedMenu = handyMenu->addMenu(tr("&Last closed"));
+    addFilelistToMenu(lastClosedMenu, config.handy, SortBy::closingTime);
+    QMenu *lastEditedMenu = handyMenu->addMenu(tr("&Last edited"));
+    addFilelistToMenu(lastEditedMenu, config.handy, SortBy::lastEditTime);
+    QMenu *namesMenu = handyMenu->addMenu(tr("&Names"));
+    addFilelistToMenu(namesMenu, config.handy, SortBy::name);
+    QMenu *pathesMenu = handyMenu->addMenu(tr("&Pathes"));
+    addFilelistToMenu(pathesMenu, config.handy, SortBy::path);
+    QMenu *unsortedMenu = handyMenu->addMenu(tr("&Unsorted"));
+    addFilelistToMenu(unsortedMenu, config.handy, SortBy::original);
 }
 
 bool TabWindow::eventFilter(QObject *watched, QEvent *event)
