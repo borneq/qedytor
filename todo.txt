@@ -16,7 +16,6 @@ todo:
 - save AS
 - save AS crypted .een
 - next version of .een
-- sorted Mru and Handy menus , sorted by last time or alphabetically
 - edit Tool->Config lists
 - when user adds Tool->Config entry - change \ to / and make first letter when second is ":" to uppercase
 - dialog window for add and edit Tool->Config entry 
