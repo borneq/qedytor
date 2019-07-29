@@ -1,6 +1,6 @@
 #include <cstdint>
 #include "blockcipher.h"
-#include "Exception.h"
+#include "exception.h"
 
 using namespace crypt;
 

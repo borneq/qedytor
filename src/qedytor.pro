@@ -1,6 +1,6 @@
 QT += core
 QT += widgets
-CONFIG += c++14
+CONFIG += c++17
 requires(qtConfig(listwidget))
 
 include(../SingleApplication/qtsingleapplication.pri)

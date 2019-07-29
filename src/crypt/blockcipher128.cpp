@@ -1,6 +1,6 @@
 #include "blockcipher128.h"
-#include "Exception.h"
-#include "Util.h"
+#include "exception.h"
+#include "util.h"
 
 using namespace crypt;
 

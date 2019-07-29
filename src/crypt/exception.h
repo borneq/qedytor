@@ -1,6 +1,7 @@
 #pragma once
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <string>
+#include <cstring>
 
 namespace crypt {
 
@@ -14,13 +15,13 @@ public:
     {
       if (_message=="")
       {
-          msgbuf = NULL;
+          msgbuf = nullptr;
           return;
       }
       size_t len = _message.length();
       msgbuf = (char*)malloc(len+1);
       if (!msgbuf) return;
-      strcpy_s(msgbuf, len + 1, _message.c_str());
+      strcpy(msgbuf, _message.c_str());
     }
     virtual ~Exception() throw(){free(msgbuf);}
     // Returns a C-style character string describing the general cause

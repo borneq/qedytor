@@ -1,7 +1,7 @@
 #include <vector>
 #include "rijndael.h"
-#include "Exception.h"
-#include "Util.h"
+#include "exception.h"
+#include "util.h"
 
 #include "rijndael_tabs.h"
 

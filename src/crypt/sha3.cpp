@@ -1,6 +1,6 @@
 #include "sha3.h"
-#include "Util.h"
-#include "Exception.h"
+#include "util.h"
+#include "exception.h"
 #include <assert.h>
 
 using namespace crypt;

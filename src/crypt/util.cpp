@@ -1,6 +1,6 @@
-#include <stdint.h>
+#include <cstdint>
 #include <vector>
-#include "Util.h"
+#include "util.h"
 
 namespace crypt {
 

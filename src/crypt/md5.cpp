@@ -1,6 +1,6 @@
 #include "md5.h"
-#include "Util.h"
-#include "Exception.h"
+#include "util.h"
+#include "exception.h"
 
 using namespace crypt;
 
