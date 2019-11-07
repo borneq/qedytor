@@ -1,3 +1,5 @@
+WARNING: tis project is still under construction, not asked when is closed not saved text!
+
 1. First You must clone **with submodules**<br>
 git clone --recurse-submodules https://github.com/borneq/qedytor.git<br>
 because it uses:<br>
