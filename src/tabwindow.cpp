@@ -505,6 +505,12 @@ void TabWindow::closeTab(int index)
 {
     QWidget *tab = tabWidget->widget(index);
     CodeEditor* editor = dynamic_cast<CodeEditor*>(tab);
+    if (editor->document()->isModified())
+    {
+        QMessageBox::warning(nullptr, "Warning", "Text not saved!",
+                                   QMessageBox::Ok);
+        return;
+    }
     ConfigFile *configFile = new ConfigFile;
     ConfigFile *existed = config.cfFindInHandyOrMru(editor->fileName);
     if (existed)
