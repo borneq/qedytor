@@ -35,30 +35,24 @@ void SearchDialog::setReplace()
 
 int SearchDialog::exec()
 {
-    QLineEdit *edit = ui->comboBox->lineEdit();
     if (initial!="")
     {
-        edit->setText(initial);
+        ui->lineEdit->setText(initial);
+    }
+    else {
+        ui->lineEdit->setText(textToFind);
     }
     ui->cbReplace->setCheckState(bReplace?Qt::CheckState::Checked:Qt::CheckState::Unchecked);
     setReplace();
-
-    /*Must not be selected, due to Enter must work*/
-    QTimer::singleShot(10, [this]{
-        QKeyEvent event(QEvent::KeyPress, Qt::Key_Right, Qt::NoModifier, "");
-        QApplication::sendEvent(ui->comboBox->lineEdit(), &event);
-        ui->comboBox->lineEdit()->setFocus();
-       });
+    ui->lineEdit->setFocus();
     return QDialog::exec();
 }
 
 void SearchDialog::find(bool bAll)
 {
     ui->OkButton->setFocus();
-    QLineEdit *edit = ui->comboBox->lineEdit();
-    textToFind = edit->text();
-    QLineEdit *editR = ui->comboBoxR->lineEdit();
-    textToReplace = editR->text();
+    textToFind = ui->lineEdit->text();
+    textToReplace = ui->lineEdit_2->text();
     unsigned f = 0;
     if (ui->cbCaseSensitive->checkState()==Qt::CheckState::Checked)
         f |= QTextDocument::FindFlag::FindCaseSensitively;
@@ -85,7 +79,5 @@ void SearchDialog::replaceAll()
 
 void SearchDialog::cancel()
 {
-    QLineEdit *edit = ui->comboBox->lineEdit();
-    initial = edit->text();
     QDialog::reject();
 }
