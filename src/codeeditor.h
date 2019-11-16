@@ -55,6 +55,8 @@ private:
     void highlightCurrentLine();
     void updateStatusBar();
 
+    QObject *getMainWindow();
+
     QTextBlock blockAtPosition(int y) const;
     bool isFoldable(const QTextBlock &block) const;
     bool isFolded(const QTextBlock &block) const;
@@ -84,7 +86,7 @@ public:
     bool showLineNumbers = false;
     explicit CodeEditor(syntaxhl::Repository *repository,
                         QString fileName, QWidget *parent = nullptr);
-    ~CodeEditor();
+    ~CodeEditor() override;
     QString fileName;
     qint64 lastEditTime = 0;
     void openFile(const QString &fileName);

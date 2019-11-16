@@ -18,7 +18,6 @@ class TabWindow : public QMainWindow, public TabControlable
 {
     Q_OBJECT
 private:
-    QTabWidget *tabWidget;
     syntaxhl::Repository *repository;
     Config config;
     ConfigDialog *configDialog = nullptr;
@@ -67,6 +66,7 @@ public slots:
     void showMenuFile();
     void showMenuHandy();
 public:
+    QTabWidget *tabWidget;
     explicit TabWindow(QWidget *parent = nullptr);
     void setTab(int n) override;
     ~TabWindow();

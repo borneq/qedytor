@@ -24,6 +24,7 @@
 #include <QScrollBar>
 #include "tabcontrolable.h"
 #include "edytorexception.h"
+#include "tabwindow.h"
 
 
 using namespace qedytor;
@@ -515,10 +516,28 @@ void CodeEditor::highlightCurrentLine()
     setExtraSelections(extraSelections);
 }
 
+QObject *CodeEditor::getMainWindow()
+{
+    QObject *result = this;
+    while(result)
+    {
+        if (dynamic_cast<TabWindow*>(result) != nullptr)
+            return result;
+        result = result->parent();
+    }
+    return result;
+}
+
 void CodeEditor::updateStatusBar()
 {
     const QTextBlock block = textCursor().block();
     const int relativePos = textCursor().position() - block.position();
+    QTabWidget* tabWidget = ((TabWindow*)(getMainWindow()))->tabWidget;
+    if (document()->isModified())
+        tabWidget->tabBar()->setTabTextColor(tabWidget->currentIndex(), Qt::red);
+    else
+        tabWidget->tabBar()->setTabTextColor(tabWidget->currentIndex(), Qt::black);
+
 #if STATUSBAR
     statusLabel1->setText(QString::number(block.blockNumber()+1)+":"+QString::number(relativePos+1));
     if (document()->isModified())
