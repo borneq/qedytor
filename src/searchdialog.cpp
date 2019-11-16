@@ -45,7 +45,7 @@ int SearchDialog::exec()
         ui->comboBoxR->lineEdit()->setFocus();
     }
     else {
-        if (edit->text()=="")
+        if (initial=="")
             edit->setFocus();
     }
     return QDialog::exec();
@@ -67,7 +67,6 @@ void SearchDialog::find(bool bAll)
         f |= QTextDocument::FindFlag::FindBackward;
     flags = QTextDocument::FindFlag(f);
     isRegular = ui->cbRegular->checkState()==Qt::CheckState::Checked;
-    initial = textToFind;
     bReplaceAll = bAll;
     QDialog::accept();
 }

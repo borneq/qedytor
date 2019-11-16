@@ -646,8 +646,6 @@ bool CodeEditor::findNext(QString textToFind, QTextDocument::FindFlags flags, bo
         cursor = document()->find(textToFind, textCursor(), flags);
     if (cursor.isNull())
     {
-        QMessageBox::warning(nullptr, "Warning","Can't find ["+textToFind+"]",
-                                   QMessageBox::Ok);
         return false;
     }
     else
