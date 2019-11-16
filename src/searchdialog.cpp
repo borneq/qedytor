@@ -10,7 +10,6 @@ SearchDialog::SearchDialog(QWidget *parent) :
     connect(ui->OkButton, SIGNAL(clicked()), this, SLOT(find()));
     connect(ui->CancelButton, SIGNAL(clicked()), this, SLOT(cancel()));
     connect(ui->cbReplace, SIGNAL(clicked()), this, SLOT(setReplace()));
-    ui->comboBox->lineEdit()->setFocus();
 }
 
 SearchDialog::~SearchDialog()
@@ -33,20 +32,25 @@ void SearchDialog::setReplace()
 
 int SearchDialog::exec()
 {
+    QLineEdit *edit = ui->comboBox->lineEdit();
     if (initial!="")
     {
-        QLineEdit *edit = ui->comboBox->lineEdit();
         edit->setText(initial);
     }
     ui->cbReplace->setCheckState(bReplace?Qt::CheckState::Checked:Qt::CheckState::Unchecked);
     setReplace();
+    if (edit->text()=="")
+        edit->setFocus();
     return QDialog::exec();
 }
 
 void SearchDialog::find()
 {
+    ui->OkButton->setFocus();
     QLineEdit *edit = ui->comboBox->lineEdit();
     textToFind = edit->text();
+    QLineEdit *editR = ui->comboBoxR->lineEdit();
+    textToReplace = editR->text();
     unsigned f = 0;
     if (ui->cbCaseSensitive->checkState()==Qt::CheckState::Checked)
         f |= QTextDocument::FindFlag::FindCaseSensitively;

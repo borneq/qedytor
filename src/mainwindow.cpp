@@ -245,7 +245,10 @@ void MainWindow::find(bool bReplace)
         int result = searchDialog.exec();
         if (result == QDialog::Accepted)
         {
-            editor->findNext(searchDialog.textToFind, searchDialog.flags, searchDialog.isRegular);
+            if (searchDialog.bReplace)
+                editor->replaceNext(searchDialog.textToFind, searchDialog.textToReplace, searchDialog.flags, searchDialog.isRegular);
+            else
+                editor->findNext(searchDialog.textToFind, searchDialog.flags, searchDialog.isRegular);
         }
     }
 }
@@ -254,7 +257,10 @@ void MainWindow::findNext()
 {
     if (tabWidget->currentWidget())
     {
-       dynamic_cast<CodeEditor*>(tabWidget->currentWidget())->findNext(searchDialog.textToFind, QTextDocument::FindFlag((int)searchDialog.flags & ~(int)QTextDocument::FindBackward), searchDialog.isRegular);
+        if (searchDialog.bReplace)
+            dynamic_cast<CodeEditor*>(tabWidget->currentWidget())->replaceNext(searchDialog.textToFind, searchDialog.textToReplace, QTextDocument::FindFlag((int)searchDialog.flags & ~(int)QTextDocument::FindBackward), searchDialog.isRegular);
+        else
+            dynamic_cast<CodeEditor*>(tabWidget->currentWidget())->findNext(searchDialog.textToFind, QTextDocument::FindFlag((int)searchDialog.flags & ~(int)QTextDocument::FindBackward), searchDialog.isRegular);
     }
 }
 
@@ -262,7 +268,10 @@ void MainWindow::findPrev()
 {
     if (tabWidget->currentWidget())
     {
-       dynamic_cast<CodeEditor*>(tabWidget->currentWidget())->findNext(searchDialog.textToFind, QTextDocument::FindFlag((int)searchDialog.flags | (int)QTextDocument::FindBackward), searchDialog.isRegular);
+        if (searchDialog.bReplace)
+            dynamic_cast<CodeEditor*>(tabWidget->currentWidget())->replaceNext(searchDialog.textToFind, searchDialog.textToReplace, QTextDocument::FindFlag((int)searchDialog.flags | (int)QTextDocument::FindBackward), searchDialog.isRegular);
+        else
+            dynamic_cast<CodeEditor*>(tabWidget->currentWidget())->findNext(searchDialog.textToFind, QTextDocument::FindFlag((int)searchDialog.flags | (int)QTextDocument::FindBackward), searchDialog.isRegular);
     }
 }
 

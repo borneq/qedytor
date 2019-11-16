@@ -17,6 +17,7 @@ public:
     ~SearchDialog();
      QString initial;
      QString textToFind;
+     QString textToReplace;
      bool bReplace;
      QTextDocument::FindFlag flags;
      bool isRegular;

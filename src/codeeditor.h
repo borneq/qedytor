@@ -92,6 +92,7 @@ public:
     void openFile(const QString &fileName);
     void saveFile(const QString& fileName, bool isSaveAs);
     void findNext(QString textToFind, QTextDocument::FindFlags flags, bool findRegular);
+    void replaceNext(QString textToFind, QString textToReplace, QTextDocument::FindFlags flags, bool findRegular);
     Properties getProperties();
     void setCorrectCursorPosition(Config &config);
 };
