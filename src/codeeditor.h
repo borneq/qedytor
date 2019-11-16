@@ -33,7 +33,7 @@
 #include "codeeditorsidebar.h"
 #include "config.h"
 
-#define STATUSBAR 0
+#define STATUSBAR 1
 
 namespace syntaxhl {
     class SyntaxHighlighter;
