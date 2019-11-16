@@ -2,24 +2,24 @@
 #define SEARCHDIALOG_H
 
 #include <QDialog>
-#include <QComboBox>
 
-namespace qedytor {
+namespace Ui {
+class SearchDialog;
+}
+
 class SearchDialog : public QDialog
 {
     Q_OBJECT
-    QComboBox *createComboBox(const QString &text);
-    QComboBox *textComboBox;
-private slots:
-    void cancel();
-    void find();
+
 public:
-    QString textToFind;
     explicit SearchDialog(QWidget *parent = nullptr);
-
-signals:
-
-public slots:
+    ~SearchDialog();
+     QString textToFind;
+private slots:
+    void find();
+    void cancel();
+private:
+    Ui::SearchDialog *ui;
 };
-}
+
 #endif // SEARCHDIALOG_H

@@ -22,8 +22,8 @@ HEADERS       += \
     edytorexception.h \
     configdialog.h \
     mainwindow.h \
-    tabcontrolable.h \
     searchdialog.h \
+    tabcontrolable.h \
     infowindow.h \
     properties.h \
     tablemodel.h \
@@ -44,8 +44,8 @@ SOURCES       += main.cpp \
     edytorexception.cpp \
     configdialog.cpp \
     mainwindow.cpp \
-    searchdialog.cpp \
     infowindow.cpp \
+    searchdialog.cpp \
     tablemodel.cpp \
     codeeditorsidebar.cpp \
     configtableview.cpp
@@ -64,4 +64,7 @@ else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../bin/libh
 else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../bin/hisyntax.lib
 else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../bin/hisyntax.lib
 else:unix: PRE_TARGETDEPS += $$PWD/../bin/libhisyntax.a
+
+FORMS += \
+    searchdialog.ui
 
