@@ -437,6 +437,10 @@ void MainWindow::createMenu()
     QMenu* helpMenu = menuBar()->addMenu(tr("&About"));
     helpMenu->addAction(aboutAct);
     helpMenu->addAction(aboutQtAct);
+    QKeyEvent event1(QEvent::KeyPress, Qt::Key_F, Qt::AltModifier, "f");
+    QApplication::sendEvent(menuBar(), &event1);
+    QKeyEvent event2(QEvent::KeyPress, Qt::Key_Escape, Qt::NoModifier, "");
+    QApplication::sendEvent(menuBar(), &event2);
 }
 
 void MainWindow::showMenuWindow()
