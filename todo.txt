@@ -3,8 +3,6 @@ Contributors welcome!
 todo:
 - Replace
 - bigger Search dialog, comboxes with last search string
-- modified (dirty) editors should be visible that are modified, for example by red title on tabWidget tab
-- should ask when user is closing modified editor
 - now click on red cross on tab close editor and add entry to most recend used (MRU), need catch all other closing editor
   also closing when program close
 - control + tab - switch between two last tab, maybe list as Visual Studio has
@@ -13,8 +11,6 @@ todo:
 - make sort all lines or selected lines
 - open file - default directory as current editor has
 - if user close file, change direcory to not keep old directory
-- save AS
-- save AS crypted .een
 - next version of .een
 - edit Tool->Config lists
 - when user adds Tool->Config entry - change \ to / and make first letter when second is ":" to uppercase
