@@ -6,13 +6,13 @@
 #include <QStatusBar>
 #include <synexception.h>
 #include <syntaxhighlighter.h>
-#include "tabwindow.h"
+#include "mainwindow.h"
 #include "codeeditor.h"
 #include "edytorexception.h"
 
 using namespace qedytor;
 
-TabWindow::TabWindow(QWidget *parent)
+MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     centralWidget = new QWidget;
@@ -49,7 +49,7 @@ TabWindow::TabWindow(QWidget *parent)
     untitledNumbers.resize(32);
 }
 
-void TabWindow::reReadRepository()
+void MainWindow::reReadRepository()
 {
     repository = nullptr;
     try {
@@ -62,7 +62,7 @@ void TabWindow::reReadRepository()
     }
 }
 
-void TabWindow::handleMessage(const QString& message)
+void MainWindow::handleMessage(const QString& message)
 {
     showNormal();//bring window to top on OSX
     raise();//bring window from minimized state on OSX
@@ -73,18 +73,18 @@ void TabWindow::handleMessage(const QString& message)
             openOrActivateFile(arguments[i]);
 }
 
-void TabWindow::currentChanged(int index)
+void MainWindow::currentChanged(int index)
 {
     if (tabWidget->currentWidget())
         setWindowTitle(((CodeEditor*)(tabWidget->currentWidget()))->fileName);
 }
 
-TabWindow::~TabWindow()
+MainWindow::~MainWindow()
 {
     delete repository;
 }
 
-bool TabWindow::openOrActivateFile(const QString& aFilePath)
+bool MainWindow::openOrActivateFile(const QString& aFilePath)
 {
     QString title;
     CodeEditor* newEditor;
@@ -185,7 +185,7 @@ bool lessThanName(const ConfigItem *it1, const ConfigItem *it2)
         return f1->name < f2->name;
 }
 
-void TabWindow::addFilelistToMenu(QMenu* menu, QList<ConfigItem*> &configlist, SortBy sortBy)
+void MainWindow::addFilelistToMenu(QMenu* menu, QList<ConfigItem*> &configlist, SortBy sortBy)
 {
     QList<ConfigItem*> sortedList = configlist;
     switch (sortBy)
@@ -208,19 +208,19 @@ void TabWindow::addFilelistToMenu(QMenu* menu, QList<ConfigItem*> &configlist, S
     });
 }
 
-void TabWindow::closeCurrentTab()
+void MainWindow::closeCurrentTab()
 {
     if (tabWidget->currentWidget())
         closeTab(tabWidget->currentIndex());
 }
 
-void TabWindow::closeApp()
+void MainWindow::closeApp()
 {
     if (tabWidget->currentWidget())
         closeTab(tabWidget->currentIndex());
 }
 
-void TabWindow::insertDate()
+void MainWindow::insertDate()
 {
     if (tabWidget->currentWidget())
     {
@@ -230,7 +230,7 @@ void TabWindow::insertDate()
     }
 }
 
-void TabWindow::insertTime()
+void MainWindow::insertTime()
 {
     if (tabWidget->currentWidget())
     {
@@ -240,7 +240,7 @@ void TabWindow::insertTime()
     }
 }
 
-void TabWindow::find()
+void MainWindow::find()
 {
     if (tabWidget->currentWidget())
     {
@@ -252,7 +252,7 @@ void TabWindow::find()
     }
 }
 
-void TabWindow::findNext()
+void MainWindow::findNext()
 {
     if (tabWidget->currentWidget())
     {
@@ -260,7 +260,7 @@ void TabWindow::findNext()
     }
 }
 
-void TabWindow::findPrev()
+void MainWindow::findPrev()
 {
     if (tabWidget->currentWidget())
     {
@@ -268,7 +268,7 @@ void TabWindow::findPrev()
     }
 }
 
-void TabWindow::properties()
+void MainWindow::properties()
 {
     Properties properties;
     if (tabWidget->currentWidget())
@@ -287,7 +287,7 @@ void TabWindow::properties()
     infoWindow->describeProperties(properties);
 }
 
-void TabWindow::openConfigDialog()
+void MainWindow::openConfigDialog()
 {
     if (!configDialog)
     {
@@ -301,31 +301,31 @@ void TabWindow::openConfigDialog()
         configDialog->activateWindow();
 }
 
-void TabWindow::openConfigDialogModal()
+void MainWindow::openConfigDialogModal()
 {
     ConfigDialog *configDialog = new ConfigDialog(&config, this);
     configDialog->exec();
     delete configDialog;
 }
 
-void TabWindow::onDestroyConfigDialog()
+void MainWindow::onDestroyConfigDialog()
 {
     configDialog = nullptr;
 }
 
-void TabWindow::onDestroyInfoWindow()
+void MainWindow::onDestroyInfoWindow()
 {
     infoWindow = nullptr;
 }
 
-void TabWindow::onChangedIni()
+void MainWindow::onChangedIni()
 {
     reReadRepository();
     menuBar()->clear();
     createMenu();
 }
 
-void TabWindow::createMenu()
+void MainWindow::createMenu()
 {
     newAction = new QAction(tr("New"), this);
     newAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_N));
@@ -416,7 +416,7 @@ void TabWindow::createMenu()
     helpMenu->addAction(aboutQtAct);
 }
 
-void TabWindow::showMenuWindow()
+void MainWindow::showMenuWindow()
 {
     windowMenu->clear();
     QActionGroup *windowGroup = new QActionGroup(windowMenu);
@@ -440,7 +440,7 @@ void TabWindow::showMenuWindow()
     });
 }
 
-void TabWindow::showMenuFile()
+void MainWindow::showMenuFile()
 {
     fileMenu->clear();
     fileMenu->addAction(newAction);
@@ -460,7 +460,7 @@ void TabWindow::showMenuFile()
     fileMenu->addAction(exitAction);
 }
 
-void TabWindow::showMenuHandy()
+void MainWindow::showMenuHandy()
 {
     handyMenu->clear();
     QMenu *lastClosedMenu = handyMenu->addMenu(tr("&Last closed"));
@@ -475,7 +475,7 @@ void TabWindow::showMenuHandy()
     addFilelistToMenu(unsortedMenu, config.handy, SortBy::original);
 }
 
-bool TabWindow::eventFilter(QObject *watched, QEvent *event)
+bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 {
     if (event->type() == QEvent::KeyPress)
     {
@@ -507,7 +507,7 @@ bool TabWindow::eventFilter(QObject *watched, QEvent *event)
     return false;
 }
 
-void TabWindow::closeTab(int index)
+void MainWindow::closeTab(int index)
 {
     QWidget *tab = tabWidget->widget(index);
     CodeEditor* editor = dynamic_cast<CodeEditor*>(tab);
@@ -547,12 +547,12 @@ void TabWindow::closeTab(int index)
 }
 
 
-void TabWindow::about()
+void MainWindow::about()
 {
     QMessageBox::information(nullptr, "About","QEdytor {>1.0}", QMessageBox::Ok);
 }
 
-void TabWindow::removeObsoleteMru()
+void MainWindow::removeObsoleteMru()
 {
     QList<ConfigItem*> newList;
     for (int i=0; i<config.mru.size(); i++)
@@ -564,19 +564,19 @@ void TabWindow::removeObsoleteMru()
     config.mru = newList;
 }
 
-void TabWindow::setTab(int n)
+void MainWindow::setTab(int n)
 {
     if (n<tabWidget->count())
         tabWidget->setCurrentIndex(n);
 }
 
-void TabWindow::aboutToQuit()
+void MainWindow::aboutToQuit()
 {
     config.geometry = saveGeometry();
     config.saveToFile();
 }
 
-void TabWindow::closeEvent(QCloseEvent *event)
+void MainWindow::closeEvent(QCloseEvent *event)
 {
     for (int i=0; i<tabWidget->count(); i++)
     {

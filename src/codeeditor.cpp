@@ -24,7 +24,7 @@
 #include <QScrollBar>
 #include "tabcontrolable.h"
 #include "edytorexception.h"
-#include "tabwindow.h"
+#include "mainwindow.h"
 
 
 using namespace qedytor;
@@ -521,7 +521,7 @@ QObject *CodeEditor::getMainWindow()
     QObject *result = this;
     while(result)
     {
-        if (dynamic_cast<TabWindow*>(result) != nullptr)
+        if (dynamic_cast<MainWindow*>(result) != nullptr)
             return result;
         result = result->parent();
     }
@@ -532,7 +532,7 @@ void CodeEditor::updateStatusBar()
 {
     const QTextBlock block = textCursor().block();
     const int relativePos = textCursor().position() - block.position();
-    QTabWidget* tabWidget = ((TabWindow*)(getMainWindow()))->tabWidget;
+    QTabWidget* tabWidget = ((MainWindow*)(getMainWindow()))->tabWidget;
     if (document()->isModified())
         tabWidget->tabBar()->setTabTextColor(tabWidget->currentIndex(), Qt::red);
     else

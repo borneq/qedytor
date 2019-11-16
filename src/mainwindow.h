@@ -14,7 +14,7 @@
 #include <QFileInfo>
 
 namespace qedytor {
-class TabWindow : public QMainWindow, public TabControlable
+class MainWindow : public QMainWindow, public TabControlable
 {
     Q_OBJECT
 private:
@@ -69,9 +69,9 @@ public slots:
     void showMenuHandy();
 public:
     QTabWidget *tabWidget;
-    explicit TabWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr);
     void setTab(int n) override;
-    ~TabWindow();
+    ~MainWindow();
 };
 }
 #endif

@@ -50,7 +50,7 @@
 #include <QtPlatformHeaders/QWindowsWindowFunctions>
 #include <../SingleApplication/QtSingleApplication>
 
-#include "tabwindow.h"
+#include "mainwindow.h"
 #include <QMessageBox>
 
 using namespace qedytor;
@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 #ifdef Q_OS_WIN //this is Windows specific code, not portable
     QWindowsWindowFunctions::setWindowActivationBehavior(QWindowsWindowFunctions::AlwaysActivateWindow);
 #endif
-    TabWindow tabWindow;
+    MainWindow tabWindow;
     tabWindow.handleMessage(message);
     tabWindow.show();
 

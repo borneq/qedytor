@@ -16,12 +16,12 @@ HEADERS       += \
     crypt/rijndael_tabs.h \
     crypt/sha3.h \
     crypt/util.h \
-    tabwindow.h \
     codeeditor.h \
     een.h \
     config.h \
     edytorexception.h \
     configdialog.h \
+    mainwindow.h \
     tabcontrolable.h \
     searchdialog.h \
     infowindow.h \
@@ -38,12 +38,12 @@ SOURCES       += main.cpp \
     crypt/rijndael.cpp \
     crypt/sha3.cpp \
     crypt/util.cpp \
-    tabwindow.cpp \
     codeeditor.cpp \
     een.cpp \
     config.cpp \
     edytorexception.cpp \
     configdialog.cpp \
+    mainwindow.cpp \
     searchdialog.cpp \
     infowindow.cpp \
     tablemodel.cpp \
