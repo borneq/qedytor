@@ -241,6 +241,9 @@ void MainWindow::find(bool bReplace)
         {
             searchDialog.initial = selected;
         }
+        else
+            searchDialog.initial = "";
+
         searchDialog.bReplace = bReplace;
         int result = searchDialog.exec();
         if (result == QDialog::Accepted)

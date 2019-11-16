@@ -35,6 +35,7 @@ void SearchDialog::setReplace()
 
 int SearchDialog::exec()
 {
+    ui->lineEdit->clear();
     if (initial!="")
     {
         ui->lineEdit->setText(initial);
