@@ -33,6 +33,7 @@ private:
     QAction *openAction;
     QAction *closeAction;
     QAction *saveAction;
+    QAction *saveasAction;
     QAction *exitAction;
     QMenu* mruMenu;
     QMenu* fileMenu;
@@ -50,7 +51,7 @@ public slots:
     void about();
     void removeObsoleteMru();
     void closeCurrentTab();
-    void closeApp();
+    void callSaveAs();
     void currentChanged(int index);
     void insertDate();
     void insertTime();

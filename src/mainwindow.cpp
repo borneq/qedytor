@@ -214,12 +214,6 @@ void MainWindow::closeCurrentTab()
         closeTab(tabWidget->currentIndex());
 }
 
-void MainWindow::closeApp()
-{
-    if (tabWidget->currentWidget())
-        closeTab(tabWidget->currentIndex());
-}
-
 void MainWindow::insertDate()
 {
     if (tabWidget->currentWidget())
@@ -325,13 +319,30 @@ void MainWindow::onChangedIni()
     createMenu();
 }
 
+void MainWindow::callSaveAs()
+{
+    if (tabWidget->currentWidget())
+    {
+        const auto fileName = QFileDialog::getSaveFileName(this, QStringLiteral("Save as File"));
+        if (!fileName.isEmpty())
+        {
+            CodeEditor *editor = dynamic_cast<CodeEditor *>(tabWidget->currentWidget());
+            QFileInfo fi(fileName);
+            editor->fileName = fi.absoluteFilePath();
+            editor->saveFile(fileName);
+            tabWidget->setTabText(tabWidget->currentIndex(), fi.fileName());
+        }
+    }
+}
+
 void MainWindow::createMenu()
 {
     newAction = new QAction(tr("New"), this);
     newAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_N));
     openAction = new QAction(tr("Open file..."), this);
-    saveAction = new QAction(tr("Save"), this);
+    saveAction = new QAction(tr("&Save"), this);
     saveAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
+    saveasAction = new QAction(tr("save &As"), this);
     exitAction = new QAction(tr("Exit"), this);
     QAction *aboutAct = new QAction(tr("About"), this);
     QAction *aboutQtAct = new QAction(tr("About Qt"), this);
@@ -362,7 +373,12 @@ void MainWindow::createMenu()
             CodeEditor *editor = dynamic_cast<CodeEditor *>(tabWidget->currentWidget());
             if (!editor->fileName.isEmpty())
                 editor->saveFile(editor->fileName);
+            else
+                callSaveAs();
         }
+    });
+    connect(saveasAction, &QAction::triggered, this, [this]() {
+        callSaveAs();
     });
     connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
     connect(aboutAct, SIGNAL(triggered()), this, SLOT(about()));
@@ -455,6 +471,7 @@ void MainWindow::showMenuFile()
     QMenu *mruPathesMenu = fileMenu->addMenu(tr("&According to path"));
     addFilelistToMenu(mruPathesMenu, config.mru, SortBy::path);
     fileMenu->addAction(saveAction);
+    fileMenu->addAction(saveasAction);
     fileMenu->addAction(closeAction);
     fileMenu->addSeparator();
     fileMenu->addAction(exitAction);
