@@ -329,7 +329,7 @@ void MainWindow::callSaveAs()
             CodeEditor *editor = dynamic_cast<CodeEditor *>(tabWidget->currentWidget());
             QFileInfo fi(fileName);
             editor->fileName = fi.absoluteFilePath();
-            editor->saveFile(fileName);
+            editor->saveFile(fileName, true);
             tabWidget->setTabText(tabWidget->currentIndex(), fi.fileName());
         }
     }
@@ -372,7 +372,7 @@ void MainWindow::createMenu()
         {
             CodeEditor *editor = dynamic_cast<CodeEditor *>(tabWidget->currentWidget());
             if (!editor->fileName.isEmpty())
-                editor->saveFile(editor->fileName);
+                editor->saveFile(editor->fileName, false);
             else
                 callSaveAs();
         }

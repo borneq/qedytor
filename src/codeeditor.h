@@ -90,7 +90,7 @@ public:
     QString fileName;
     qint64 lastEditTime = 0;
     void openFile(const QString &fileName);
-    void saveFile(const QString& fileName);
+    void saveFile(const QString& fileName, bool isSaveAs);
     void findNext(QString textToFind, QTextDocument::FindFlags flags);
     Properties getProperties();
     void setCorrectCursorPosition(Config &config);

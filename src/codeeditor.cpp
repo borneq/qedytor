@@ -123,7 +123,6 @@ void CodeEditor::openFile(const QString& fileName)
             content.clear();
             een_password = "";
         }
-
     }
 
     QString string;
@@ -166,7 +165,7 @@ void CodeEditor::openFile(const QString& fileName)
     setFont(font);
 }
 
-void CodeEditor::saveFile(const QString& fileName)
+void CodeEditor::saveFile(const QString& fileName, bool isSaveAs)
 {
     QTextCodec *codec;
     if (saveUtfKind==UtfKind::locale)
@@ -199,6 +198,11 @@ void CodeEditor::saveFile(const QString& fileName)
     rx.setPatternSyntax(QRegExp::Wildcard);
     if (rx.exactMatch(fileName))
     {
+        if (isSaveAs)
+        {
+            QString password = QInputDialog::getText(this, "Crypted", "Set password");
+            een_password = password.toStdString();
+        }
         Een een;
         content = een.encrypt(content, een_password);
         QFile f(fileName);
