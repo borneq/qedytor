@@ -20,6 +20,15 @@ void SearchDialog::find()
 {
     QLineEdit *edit = ui->comboBox->lineEdit();
     textToFind = edit->text();
+    unsigned f = 0;
+    if (ui->cbCaseSensitive->checkState()==Qt::CheckState::Checked)
+        f |= QTextDocument::FindFlag::FindCaseSensitively;
+    if (ui->cbWholeWords->checkState()==Qt::CheckState::Checked)
+        f |= QTextDocument::FindFlag::FindWholeWords;
+    if (ui->cbBackwards->checkState()==Qt::CheckState::Checked)
+        f |= QTextDocument::FindFlag::FindBackward;
+    flags = QTextDocument::FindFlag(f);
+    isRegular = ui->cbRegular->checkState()==Qt::CheckState::Checked;
     QDialog::accept();
 }
 

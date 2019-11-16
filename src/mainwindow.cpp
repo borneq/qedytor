@@ -241,7 +241,7 @@ void MainWindow::find()
         int result = searchDialog.exec();
         if (result == QDialog::Accepted)
         {
-            dynamic_cast<CodeEditor*>(tabWidget->currentWidget())->findNext(searchDialog.textToFind, 0);
+            dynamic_cast<CodeEditor*>(tabWidget->currentWidget())->findNext(searchDialog.textToFind, searchDialog.flags, searchDialog.isRegular);
         }
     }
 }
@@ -250,7 +250,7 @@ void MainWindow::findNext()
 {
     if (tabWidget->currentWidget())
     {
-       dynamic_cast<CodeEditor*>(tabWidget->currentWidget())->findNext(searchDialog.textToFind, 0);
+       dynamic_cast<CodeEditor*>(tabWidget->currentWidget())->findNext(searchDialog.textToFind, QTextDocument::FindFlag((int)searchDialog.flags & ~(int)QTextDocument::FindBackward), searchDialog.isRegular);
     }
 }
 
@@ -258,7 +258,7 @@ void MainWindow::findPrev()
 {
     if (tabWidget->currentWidget())
     {
-       dynamic_cast<CodeEditor*>(tabWidget->currentWidget())->findNext(searchDialog.textToFind, QTextDocument::FindBackward);
+       dynamic_cast<CodeEditor*>(tabWidget->currentWidget())->findNext(searchDialog.textToFind, QTextDocument::FindFlag((int)searchDialog.flags | (int)QTextDocument::FindBackward), searchDialog.isRegular);
     }
 }
 

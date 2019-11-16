@@ -634,10 +634,16 @@ bool CodeEditor::eventFilter(QObject *watched, QEvent *event)
     return false;
 }
 
-void CodeEditor::findNext(QString textToFind, QTextDocument::FindFlags flags)
+void CodeEditor::findNext(QString textToFind, QTextDocument::FindFlags flags, bool findRegular)
 {
     QTextCursor cursor(document());
-    cursor = document()->find(textToFind, textCursor(), flags);
+    if (findRegular)
+    {
+        QRegularExpression expr(textToFind);
+        cursor = document()->find(expr, textCursor(), flags);
+    }
+    else
+        cursor = document()->find(textToFind, textCursor(), flags);
     if (cursor.isNull())
         QMessageBox::warning(nullptr, "Warning","Can't find ["+textToFind+"]",
                                    QMessageBox::Ok);

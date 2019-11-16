@@ -2,6 +2,7 @@
 #define SEARCHDIALOG_H
 
 #include <QDialog>
+#include <QTextDocument>
 
 namespace Ui {
 class SearchDialog;
@@ -15,6 +16,8 @@ public:
     explicit SearchDialog(QWidget *parent = nullptr);
     ~SearchDialog();
      QString textToFind;
+     QTextDocument::FindFlag flags;
+     bool isRegular;
 private slots:
     void find();
     void cancel();

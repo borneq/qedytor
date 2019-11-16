@@ -91,7 +91,7 @@ public:
     qint64 lastEditTime = 0;
     void openFile(const QString &fileName);
     void saveFile(const QString& fileName, bool isSaveAs);
-    void findNext(QString textToFind, QTextDocument::FindFlags flags);
+    void findNext(QString textToFind, QTextDocument::FindFlags flags, bool findRegular);
     Properties getProperties();
     void setCorrectCursorPosition(Config &config);
 };
