@@ -18,14 +18,17 @@ public:
      QString initial;
      QString textToFind;
      QString textToReplace;
-     bool bReplace;
      QTextDocument::FindFlag flags;
+     bool bReplace;
+     bool bReplaceAll;
      bool isRegular;
      int exec() override;
 private slots:
-    void find();
-    void cancel();
-    void setReplace();
+     void find(bool bAll);
+     void findReplace();
+     void replaceAll();
+     void cancel();
+     void setReplace();
 private:
     Ui::SearchDialog *ui;
 };

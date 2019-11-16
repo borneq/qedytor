@@ -247,10 +247,20 @@ void MainWindow::find(bool bReplace)
         {
             if (searchDialog.bReplace)
             {
+                int count = 0;
                 if (editor->textCursor().selectedText()==searchDialog.textToFind)
+                {
                     editor->textCursor().insertText(searchDialog.textToReplace);
-                else
-                    editor->replaceNext(searchDialog.textToFind, searchDialog.textToReplace, searchDialog.flags, searchDialog.isRegular);
+                    count++;
+                }
+                if (searchDialog.bReplaceAll)
+                {
+                    while(editor->replaceNext(searchDialog.textToFind, searchDialog.textToReplace, searchDialog.flags, searchDialog.isRegular))
+                        count++;
+                }
+                else if (count ==0)
+                        editor->replaceNext(searchDialog.textToFind, searchDialog.textToReplace, searchDialog.flags, searchDialog.isRegular);
+
             }
             else
                 editor->findNext(searchDialog.textToFind, searchDialog.flags, searchDialog.isRegular);

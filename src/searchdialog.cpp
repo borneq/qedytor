@@ -7,7 +7,8 @@ SearchDialog::SearchDialog(QWidget *parent) :
     ui(new Ui::SearchDialog)
 {
     ui->setupUi(this);
-    connect(ui->OkButton, SIGNAL(clicked()), this, SLOT(find()));
+    connect(ui->OkButton, SIGNAL(clicked()), this, SLOT(findReplace()));
+    connect(ui->ReplaceAllButton, SIGNAL(clicked()), this, SLOT(replaceAll()));
     connect(ui->CancelButton, SIGNAL(clicked()), this, SLOT(cancel()));
     connect(ui->cbReplace, SIGNAL(clicked()), this, SLOT(setReplace()));
 }
@@ -50,7 +51,7 @@ int SearchDialog::exec()
     return QDialog::exec();
 }
 
-void SearchDialog::find()
+void SearchDialog::find(bool bAll)
 {
     ui->OkButton->setFocus();
     QLineEdit *edit = ui->comboBox->lineEdit();
@@ -67,8 +68,20 @@ void SearchDialog::find()
     flags = QTextDocument::FindFlag(f);
     isRegular = ui->cbRegular->checkState()==Qt::CheckState::Checked;
     initial = textToFind;
+    bReplaceAll = bAll;
     QDialog::accept();
 }
+
+void SearchDialog::findReplace()
+{
+    find(false);
+}
+
+void SearchDialog::replaceAll()
+{
+    find(true);
+}
+
 
 void SearchDialog::cancel()
 {
