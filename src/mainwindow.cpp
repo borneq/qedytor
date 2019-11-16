@@ -615,5 +615,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
             return;
         }
     }
+    for (int i=tabWidget->count()-1; i>=0; i--)
+        closeTab(i);
     event->accept();
 }
