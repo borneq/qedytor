@@ -55,7 +55,7 @@ public slots:
     void currentChanged(int index);
     void insertDate();
     void insertTime();
-    void find();
+    void find(bool bReplace);
     void findNext();
     void findPrev();
     void openConfigDialog();

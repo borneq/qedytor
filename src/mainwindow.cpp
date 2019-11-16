@@ -230,7 +230,7 @@ void MainWindow::insertTime()
     }
 }
 
-void MainWindow::find()
+void MainWindow::find(bool bReplace)
 {
     if (tabWidget->currentWidget())
     {
@@ -241,6 +241,7 @@ void MainWindow::find()
         {
             searchDialog.initial = selected;
         }
+        searchDialog.bReplace = bReplace;
         int result = searchDialog.exec();
         if (result == QDialog::Accepted)
         {
@@ -356,6 +357,8 @@ void MainWindow::createMenu()
     QAction *insertTimeAction = new QAction("Insert &time", this);
     QAction *findAction = new QAction("&Find...", this);
     findAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_F));
+    QAction *replaceAction = new QAction("&Replace...", this);
+    replaceAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_H));
     QAction *findNextAction = new QAction("Find &next", this);
     findNextAction->setShortcut(QKeySequence(Qt::Key_F3));
     QAction *findPrevAction = new QAction("Find &prev", this);
@@ -390,7 +393,12 @@ void MainWindow::createMenu()
     connect(configAction, SIGNAL(triggered()), this, SLOT(openConfigDialog()));
     connect(insertDateAction, SIGNAL(triggered()), this, SLOT(insertDate()));
     connect(insertTimeAction, SIGNAL(triggered()), this, SLOT(insertTime()));
-    connect(findAction, SIGNAL(triggered()), this, SLOT(find()));
+    connect(findAction, &QAction::triggered, this, [this]() {
+           find(false);
+    });
+    connect(replaceAction, &QAction::triggered, this, [this]() {
+           find(true);
+    });
     connect(findNextAction, SIGNAL(triggered()), this, SLOT(findNext()));
     connect(findPrevAction, SIGNAL(triggered()), this, SLOT(findPrev()));
     connect(propertiesAction, SIGNAL(triggered()), this, SLOT(properties()));
@@ -401,6 +409,7 @@ void MainWindow::createMenu()
     searchMenu->addAction(findAction);
     searchMenu->addAction(findNextAction);
     searchMenu->addAction(findPrevAction);
+    searchMenu->addAction(replaceAction);
     QMenu* toolsMenu = menuBar()->addMenu(tr("&Tools"));
     toolsMenu->addAction(configAction);
     toolsMenu->addAction(insertDateAction);

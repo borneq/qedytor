@@ -17,12 +17,14 @@ public:
     ~SearchDialog();
      QString initial;
      QString textToFind;
+     bool bReplace;
      QTextDocument::FindFlag flags;
      bool isRegular;
      int exec() override;
 private slots:
     void find();
     void cancel();
+    void setReplace();
 private:
     Ui::SearchDialog *ui;
 };

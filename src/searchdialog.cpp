@@ -9,12 +9,26 @@ SearchDialog::SearchDialog(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->OkButton, SIGNAL(clicked()), this, SLOT(find()));
     connect(ui->CancelButton, SIGNAL(clicked()), this, SLOT(cancel()));
+    connect(ui->cbReplace, SIGNAL(clicked()), this, SLOT(setReplace()));
     ui->comboBox->lineEdit()->setFocus();
 }
 
 SearchDialog::~SearchDialog()
 {
     delete ui;
+}
+
+void SearchDialog::setReplace()
+{
+    bReplace = ui->cbReplace->checkState()== Qt::CheckState::Checked;
+    if (bReplace) {
+        ui->OkButton->setText("&Replace");
+        ui->ReplaceAllButton->setVisible(true);
+    }
+    else {
+        ui->OkButton->setText("&Find");
+        ui->ReplaceAllButton->setVisible(false);
+    }
 }
 
 int SearchDialog::exec()
@@ -24,8 +38,11 @@ int SearchDialog::exec()
         QLineEdit *edit = ui->comboBox->lineEdit();
         edit->setText(initial);
     }
+    ui->cbReplace->setCheckState(bReplace?Qt::CheckState::Checked:Qt::CheckState::Unchecked);
+    setReplace();
     return QDialog::exec();
 }
+
 void SearchDialog::find()
 {
     QLineEdit *edit = ui->comboBox->lineEdit();
