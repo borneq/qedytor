@@ -1,3 +1,4 @@
+#include <qlineedit.h>
 #include "searchdialog.h"
 #include "ui_searchdialog.h"
 
@@ -8,6 +9,7 @@ SearchDialog::SearchDialog(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->OkButton, SIGNAL(clicked()), this, SLOT(find()));
     connect(ui->CancelButton, SIGNAL(clicked()), this, SLOT(cancel()));
+    ui->comboBox->lineEdit()->setFocus();
 }
 
 SearchDialog::~SearchDialog()
@@ -16,7 +18,8 @@ SearchDialog::~SearchDialog()
 }
 void SearchDialog::find()
 {
-    textToFind = "a";
+    QLineEdit *edit = ui->comboBox->lineEdit();
+    textToFind = edit->text();
     QDialog::accept();
 }
 
