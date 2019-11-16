@@ -42,6 +42,7 @@ private:
     void reReadRepository();
     SearchDialog searchDialog;
     QBitArray untitledNumbers;
+    void closeEvent(QCloseEvent *event)override;
 signals:
     void needToShow();
 public slots:
@@ -49,6 +50,7 @@ public slots:
     void about();
     void removeObsoleteMru();
     void closeCurrentTab();
+    void closeApp();
     void currentChanged(int index);
     void insertDate();
     void insertTime();

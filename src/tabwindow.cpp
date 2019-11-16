@@ -214,6 +214,12 @@ void TabWindow::closeCurrentTab()
         closeTab(tabWidget->currentIndex());
 }
 
+void TabWindow::closeApp()
+{
+    if (tabWidget->currentWidget())
+        closeTab(tabWidget->currentIndex());
+}
+
 void TabWindow::insertDate()
 {
     if (tabWidget->currentWidget())
@@ -358,7 +364,7 @@ void TabWindow::createMenu()
                 editor->saveFile(editor->fileName);
         }
     });
-    connect(exitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
+    connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
     connect(aboutAct, SIGNAL(triggered()), this, SLOT(about()));
     connect(aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(closeAction, SIGNAL(triggered()), this, SLOT(closeCurrentTab()));
@@ -568,4 +574,22 @@ void TabWindow::aboutToQuit()
 {
     config.geometry = saveGeometry();
     config.saveToFile();
+}
+
+void TabWindow::closeEvent(QCloseEvent *event)
+{
+    for (int i=0; i<tabWidget->count(); i++)
+    {
+        CodeEditor *editor = qobject_cast<CodeEditor *>(tabWidget->widget(i));
+        if (editor->document()->isModified())
+        {
+            tabWidget->setCurrentIndex(i);
+            QMessageBox::warning(nullptr, "Warning", "Text not saved!",
+                                       QMessageBox::Ok);
+            editor->setFocus();
+            event->ignore();
+            return;
+        }
+    }
+    event->accept();
 }
