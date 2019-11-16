@@ -634,7 +634,7 @@ bool CodeEditor::eventFilter(QObject *watched, QEvent *event)
     return false;
 }
 
-void CodeEditor::findNext(QString textToFind, QTextDocument::FindFlags flags, bool findRegular)
+bool CodeEditor::findNext(QString textToFind, QTextDocument::FindFlags flags, bool findRegular)
 {
     QTextCursor cursor(document());
     if (findRegular)
@@ -645,27 +645,24 @@ void CodeEditor::findNext(QString textToFind, QTextDocument::FindFlags flags, bo
     else
         cursor = document()->find(textToFind, textCursor(), flags);
     if (cursor.isNull())
+    {
         QMessageBox::warning(nullptr, "Warning","Can't find ["+textToFind+"]",
                                    QMessageBox::Ok);
+        return false;
+    }
     else
+    {
         setTextCursor(cursor);
+        return true;
+    }
 }
 
-void CodeEditor::replaceNext(QString textToFind, QString textToReplace, QTextDocument::FindFlags flags, bool findRegular)
+bool CodeEditor::replaceNext(QString textToFind, QString textToReplace, QTextDocument::FindFlags flags, bool findRegular)
 {
-    QTextCursor cursor(document());
-    if (findRegular)
-    {
-        QRegularExpression expr(textToFind);
-        cursor = document()->find(expr, textCursor(), flags);
-    }
-    else
-        cursor = document()->find(textToFind, textCursor(), flags);
-    if (cursor.isNull())
-        QMessageBox::warning(nullptr, "Warning","Can't find ["+textToFind+"]",
-                                   QMessageBox::Ok);
-    else
-        setTextCursor(cursor);
+    bool b = findNext(textToFind, flags, findRegular);
+    if (!b) return false;
+    textCursor().insertText(textToReplace);
+    return true;
 }
 
 Properties CodeEditor::getProperties()

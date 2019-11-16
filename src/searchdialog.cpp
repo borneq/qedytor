@@ -39,8 +39,14 @@ int SearchDialog::exec()
     }
     ui->cbReplace->setCheckState(bReplace?Qt::CheckState::Checked:Qt::CheckState::Unchecked);
     setReplace();
-    if (edit->text()=="")
-        edit->setFocus();
+    if (bReplace)
+    {
+        ui->comboBoxR->lineEdit()->setFocus();
+    }
+    else {
+        if (edit->text()=="")
+            edit->setFocus();
+    }
     return QDialog::exec();
 }
 

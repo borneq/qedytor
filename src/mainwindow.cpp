@@ -246,7 +246,12 @@ void MainWindow::find(bool bReplace)
         if (result == QDialog::Accepted)
         {
             if (searchDialog.bReplace)
-                editor->replaceNext(searchDialog.textToFind, searchDialog.textToReplace, searchDialog.flags, searchDialog.isRegular);
+            {
+                if (editor->textCursor().selectedText()==searchDialog.textToFind)
+                    editor->textCursor().insertText(searchDialog.textToReplace);
+                else
+                    editor->replaceNext(searchDialog.textToFind, searchDialog.textToReplace, searchDialog.flags, searchDialog.isRegular);
+            }
             else
                 editor->findNext(searchDialog.textToFind, searchDialog.flags, searchDialog.isRegular);
         }
