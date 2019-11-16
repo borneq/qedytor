@@ -1,4 +1,6 @@
 #include <qlineedit.h>
+#include <QKeyEvent>
+#include <QTimer>
 #include "searchdialog.h"
 #include "ui_searchdialog.h"
 
@@ -40,14 +42,13 @@ int SearchDialog::exec()
     }
     ui->cbReplace->setCheckState(bReplace?Qt::CheckState::Checked:Qt::CheckState::Unchecked);
     setReplace();
-    if (bReplace)
-    {
-        ui->comboBoxR->lineEdit()->setFocus();
-    }
-    else {
-        if (initial=="")
-            edit->setFocus();
-    }
+
+    /*Must not be selected, due to Enter must work*/
+    QTimer::singleShot(10, [this]{
+        QKeyEvent event(QEvent::KeyPress, Qt::Key_Right, Qt::NoModifier, "");
+        QApplication::sendEvent(ui->comboBox->lineEdit(), &event);
+        ui->comboBox->lineEdit()->setFocus();
+       });
     return QDialog::exec();
 }
 

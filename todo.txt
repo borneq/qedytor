@@ -1,6 +1,8 @@
 Contributors welcome!
 
 todo:
+- sometimes (when turn off wrapping) status bar is invisible (maybe when are long lines in text?)
+- control up/down - move text down/up
 - control + tab - switch between two last tab, maybe list as Visual Studio has
 - error: sometime Alt+1, ALt+2 insert date instead go to tab
 - tools->properties should be info about word count, char count, etc.
