@@ -238,10 +238,17 @@ void MainWindow::find()
 {
     if (tabWidget->currentWidget())
     {
+        CodeEditor* editor = dynamic_cast<CodeEditor*>(tabWidget->currentWidget());
+        QString selected = editor->textCursor().selectedText();
+        QChar endl(8233);
+        if (selected!="" && !selected.contains(endl))
+        {
+            searchDialog.initial = selected;
+        }
         int result = searchDialog.exec();
         if (result == QDialog::Accepted)
         {
-            dynamic_cast<CodeEditor*>(tabWidget->currentWidget())->findNext(searchDialog.textToFind, searchDialog.flags, searchDialog.isRegular);
+            editor->findNext(searchDialog.textToFind, searchDialog.flags, searchDialog.isRegular);
         }
     }
 }

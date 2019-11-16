@@ -16,6 +16,16 @@ SearchDialog::~SearchDialog()
 {
     delete ui;
 }
+
+int SearchDialog::exec()
+{
+    if (initial!="")
+    {
+        QLineEdit *edit = ui->comboBox->lineEdit();
+        edit->setText(initial);
+    }
+    return QDialog::exec();
+}
 void SearchDialog::find()
 {
     QLineEdit *edit = ui->comboBox->lineEdit();
@@ -29,10 +39,13 @@ void SearchDialog::find()
         f |= QTextDocument::FindFlag::FindBackward;
     flags = QTextDocument::FindFlag(f);
     isRegular = ui->cbRegular->checkState()==Qt::CheckState::Checked;
+    initial = textToFind;
     QDialog::accept();
 }
 
 void SearchDialog::cancel()
 {
+    QLineEdit *edit = ui->comboBox->lineEdit();
+    initial = edit->text();
     QDialog::reject();
 }

@@ -15,9 +15,11 @@ class SearchDialog : public QDialog
 public:
     explicit SearchDialog(QWidget *parent = nullptr);
     ~SearchDialog();
+     QString initial;
      QString textToFind;
      QTextDocument::FindFlag flags;
      bool isRegular;
+     int exec() override;
 private slots:
     void find();
     void cancel();
