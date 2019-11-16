@@ -41,7 +41,7 @@ private:
     QMenu* handyMenu;
     void closeTab(int index);
     void reReadRepository();
-    SearchDialog *searchDialog;
+    SearchDialog searchDialog;
     QBitArray untitledNumbers;
     void closeEvent(QCloseEvent *event)override;
 signals:

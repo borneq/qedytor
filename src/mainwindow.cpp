@@ -237,51 +237,49 @@ void MainWindow::find(bool bReplace)
         CodeEditor* editor = dynamic_cast<CodeEditor*>(tabWidget->currentWidget());
         QString selected = editor->textCursor().selectedText();
         QChar endl(8233);
-        searchDialog = new SearchDialog(this);
         if (selected!="" && !selected.contains(endl))
         {
-            searchDialog->initial = selected;
+            searchDialog.initial = selected;
         }
-        searchDialog->bReplace = bReplace;
-        int result = searchDialog->exec();
+        searchDialog.bReplace = bReplace;
+        int result = searchDialog.exec();
         if (result == QDialog::Accepted)
         {
-            if (searchDialog->bReplace)
+            if (searchDialog.bReplace)
             {
                 int count = 0;
-                if (editor->textCursor().selectedText()==searchDialog->textToFind)
+                if (editor->textCursor().selectedText()==searchDialog.textToFind)
                 {
-                    editor->textCursor().insertText(searchDialog->textToReplace);
+                    editor->textCursor().insertText(searchDialog.textToReplace);
                     count++;
                 }
-                if (searchDialog->bReplaceAll)
+                if (searchDialog.bReplaceAll)
                 {
-                    while(editor->replaceNext(searchDialog->textToFind, searchDialog->textToReplace, searchDialog->flags, searchDialog->isRegular))
+                    while(editor->replaceNext(searchDialog.textToFind, searchDialog.textToReplace, searchDialog.flags, searchDialog.isRegular))
                         count++;
                 }
                 else if (count ==0)
-                        if (editor->replaceNext(searchDialog->textToFind, searchDialog->textToReplace, searchDialog->flags, searchDialog->isRegular))
+                        if (editor->replaceNext(searchDialog.textToFind, searchDialog.textToReplace, searchDialog.flags, searchDialog.isRegular))
                             count++;
                 if (count==0)
-                    QMessageBox::warning(nullptr, "Warning","Can't find ["+searchDialog->textToFind+"]",
+                    QMessageBox::warning(nullptr, "Warning","Can't find ["+searchDialog.textToFind+"]",
                                            QMessageBox::Ok);
             }
             else
             {
-                bool found = editor->findNext(searchDialog->textToFind, searchDialog->flags, searchDialog->isRegular);
+                bool found = editor->findNext(searchDialog.textToFind, searchDialog.flags, searchDialog.isRegular);
                 if (!found)
                 {
-                    if (editor->textCursor().selectedText()==searchDialog->textToFind)
-                        QMessageBox::warning(nullptr, "Warning","Text ["+searchDialog->textToFind+"] only once",
+                    if (editor->textCursor().selectedText()==searchDialog.textToFind)
+                        QMessageBox::warning(nullptr, "Warning","Text ["+searchDialog.textToFind+"] only once",
                                            QMessageBox::Ok);
                     else
-                        QMessageBox::warning(nullptr, "Warning","Can't find ["+searchDialog->textToFind+"]",
+                        QMessageBox::warning(nullptr, "Warning","Can't find ["+searchDialog.textToFind+"]",
                                            QMessageBox::Ok);
                 }
             }
         }
     }
-    delete searchDialog;
 }
 
 void MainWindow::findNext()
@@ -289,12 +287,12 @@ void MainWindow::findNext()
     if (tabWidget->currentWidget())
     {
         bool found = false;
-        if (searchDialog->bReplace)
-            found = dynamic_cast<CodeEditor*>(tabWidget->currentWidget())->replaceNext(searchDialog->textToFind, searchDialog->textToReplace, QTextDocument::FindFlag((int)searchDialog->flags & ~(int)QTextDocument::FindBackward), searchDialog->isRegular);
+        if (searchDialog.bReplace)
+            found = dynamic_cast<CodeEditor*>(tabWidget->currentWidget())->replaceNext(searchDialog.textToFind, searchDialog.textToReplace, QTextDocument::FindFlag((int)searchDialog.flags & ~(int)QTextDocument::FindBackward), searchDialog.isRegular);
         else
-            found = dynamic_cast<CodeEditor*>(tabWidget->currentWidget())->findNext(searchDialog->textToFind, QTextDocument::FindFlag((int)searchDialog->flags & ~(int)QTextDocument::FindBackward), searchDialog->isRegular);
+            found = dynamic_cast<CodeEditor*>(tabWidget->currentWidget())->findNext(searchDialog.textToFind, QTextDocument::FindFlag((int)searchDialog.flags & ~(int)QTextDocument::FindBackward), searchDialog.isRegular);
         if (!found)
-            QMessageBox::warning(nullptr, "Warning","Can't find ["+searchDialog->textToFind+"]",
+            QMessageBox::warning(nullptr, "Warning","Can't find ["+searchDialog.textToFind+"]",
                                    QMessageBox::Ok);
     }    
 }
@@ -304,12 +302,12 @@ void MainWindow::findPrev()
     if (tabWidget->currentWidget())
     {
         bool found = false;
-        if (searchDialog->bReplace)
-            found = dynamic_cast<CodeEditor*>(tabWidget->currentWidget())->replaceNext(searchDialog->textToFind, searchDialog->textToReplace, QTextDocument::FindFlag((int)searchDialog->flags | (int)QTextDocument::FindBackward), searchDialog->isRegular);
+        if (searchDialog.bReplace)
+            found = dynamic_cast<CodeEditor*>(tabWidget->currentWidget())->replaceNext(searchDialog.textToFind, searchDialog.textToReplace, QTextDocument::FindFlag((int)searchDialog.flags | (int)QTextDocument::FindBackward), searchDialog.isRegular);
         else
-            found = dynamic_cast<CodeEditor*>(tabWidget->currentWidget())->findNext(searchDialog->textToFind, QTextDocument::FindFlag((int)searchDialog->flags | (int)QTextDocument::FindBackward), searchDialog->isRegular);
+            found = dynamic_cast<CodeEditor*>(tabWidget->currentWidget())->findNext(searchDialog.textToFind, QTextDocument::FindFlag((int)searchDialog.flags | (int)QTextDocument::FindBackward), searchDialog.isRegular);
         if (!found)
-            QMessageBox::warning(nullptr, "Warning","Can't find ["+searchDialog->textToFind+"]",
+            QMessageBox::warning(nullptr, "Warning","Can't find ["+searchDialog.textToFind+"]",
                                    QMessageBox::Ok);
     }
 }
