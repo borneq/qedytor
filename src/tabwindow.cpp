@@ -139,6 +139,10 @@ bool TabWindow::openOrActivateFile(const QString& aFilePath)
     tabWidget->addTab(newEditor, title);
     tabWidget->setCurrentWidget(newEditor);
     newEditor->setCorrectCursorPosition(config);
+    QKeyEvent event1(QEvent::KeyPress, Qt::Key_F, Qt::AltModifier, "f");
+    QApplication::sendEvent(menuBar(), &event1);
+    QKeyEvent event2(QEvent::KeyPress, Qt::Key_Escape, Qt::NoModifier, "");
+    QApplication::sendEvent(menuBar(), &event2);
     newEditor->setFocus();
     connect(newEditor, &QPlainTextEdit::textChanged, newEditor, &CodeEditor::onTextChanged);
     return true;
