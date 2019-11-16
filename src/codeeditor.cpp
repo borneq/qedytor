@@ -31,8 +31,10 @@ using namespace qedytor;
 CodeEditor::CodeEditor(syntaxhl::Repository *repository,QString name, QWidget *parent):  QPlainTextEdit(parent),
     m_repositoryRef(repository),
     highlighter(new syntaxhl::SyntaxHighlighter(document())),
-    m_sideBar(new CodeEditorSidebar(this)),
-    m_statusBar(new QStatusBar(this))
+    m_sideBar(new CodeEditorSidebar(this))
+#if STATUSBAR
+  ,m_statusBar(new QStatusBar(this))
+#endif
 {
     this->fileName = name;
     setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
@@ -46,7 +48,7 @@ CodeEditor::CodeEditor(syntaxhl::Repository *repository,QString name, QWidget *p
     connect(this, &QPlainTextEdit::cursorPositionChanged, this, &CodeEditor::highlightCurrentLine);
     connect(this, &QPlainTextEdit::cursorPositionChanged, this, &CodeEditor::updateStatusBar);
     connect(this, &QPlainTextEdit::textChanged, this, &CodeEditor::updateStatusBar);
-
+#if STATUSBAR
     m_statusBar->setStyleSheet("border-top: 1px solid lightgray");
     m_statusBar->setSizeGripEnabled(false);
     statusLabel1 = new QLabel(this);
@@ -58,6 +60,7 @@ CodeEditor::CodeEditor(syntaxhl::Repository *repository,QString name, QWidget *p
     statusLabel0 = new QLabel(this);
     statusLabel0->setMinimumWidth(10);
     m_statusBar->addWidget(statusLabel0, 1);
+#endif
     updateBarsGeometry();
     highlightCurrentLine();
     installEventFilter(this);
@@ -473,14 +476,20 @@ void CodeEditor::sidebarPaintEvent(QPaintEvent *event)
 
 void CodeEditor::updateBarsGeometry()
 {
+#if STATUSBAR
     const int StatusH = 20;
+#else
+    const int StatusH = 0;
+#endif
     setViewportMargins(sidebarWidth(), 0, 0, StatusH);
     const auto r = contentsRect();
     m_sideBar->setGeometry(QRect(r.left(), r.top(), sidebarWidth(), r.height()));
+#if STATUSBAR
     if (verticalScrollBar()->isVisible())
         m_statusBar->setGeometry(QRect(r.left(), r.top()+r.height()-StatusH, r.width()-verticalScrollBar()->width(), StatusH));
     else
         m_statusBar->setGeometry(QRect(r.left(), r.top()+r.height()-StatusH, r.width(), StatusH));
+#endif
 }
 
 void CodeEditor::updateSidebarArea(const QRect& rect, int dy)
@@ -510,11 +519,13 @@ void CodeEditor::updateStatusBar()
 {
     const QTextBlock block = textCursor().block();
     const int relativePos = textCursor().position() - block.position();
+#if STATUSBAR
     statusLabel1->setText(QString::number(block.blockNumber()+1)+":"+QString::number(relativePos+1));
     if (document()->isModified())
         statusLabel2->setText("*");
     else
         statusLabel2->setText("");
+#endif
 }
 
 QTextBlock CodeEditor::blockAtPosition(int y) const

@@ -33,6 +33,8 @@
 #include "codeeditorsidebar.h"
 #include "config.h"
 
+#define STATUSBAR 0
+
 namespace syntaxhl {
     class SyntaxHighlighter;
 }
@@ -61,12 +63,15 @@ private:
 
     syntaxhl::Repository *m_repositoryRef;
     CodeEditorSidebar *m_sideBar;
-    QStatusBar *m_statusBar;
+
     bool eventFilter(QObject *watched, QEvent *event);
     std::string een_password;
+#if STATUSBAR
+    QStatusBar *m_statusBar;
     QLabel *statusLabel0;
     QLabel *statusLabel1;
     QLabel *statusLabel2;
+#endif
 protected:
     void contextMenuEvent(QContextMenuEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
