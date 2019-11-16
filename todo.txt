@@ -1,13 +1,9 @@
 Contributors welcome!
 
 todo:
-- Replace
-- bigger Search dialog, comboxes with last search string
-- now click on red cross on tab close editor and add entry to most recend used (MRU), need catch all other closing editor
-  also closing when program close
 - control + tab - switch between two last tab, maybe list as Visual Studio has
 - error: sometime Alt+1, ALt+2 insert date instead go to tab
-- tools->properties should be info about word coint, char count, etc.
+- tools->properties should be info about word count, char count, etc.
 - make sort all lines or selected lines
 - open file - default directory as current editor has
 - if user close file, change direcory to not keep old directory
@@ -18,8 +14,6 @@ todo:
 - ^l - change word or selected to lowercase, ^u to uppercase, ^k - first letter uppercase, else lowercase 
 - if will error in json, not replace it by empty, only warning
 - re-read file
-
-
 
 todo hisyntax project:
 - Markdown files (*.md) should be like github preview (**bold**, *italic*, <br>, etc..)
