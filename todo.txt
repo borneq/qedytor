@@ -1,6 +1,8 @@
 Contributors welcome!
 
 todo:
+- don't fill dynamically menu File but only its submenus
+- ReplaceAll - checkbox "Start from begin"
 - sometimes (when turn off wrapping) status bar is invisible (maybe when are long lines in text?)
 - control up/down - move text down/up
 - control + tab - switch between two last tab, maybe list as Visual Studio has
