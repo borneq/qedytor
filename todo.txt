@@ -1,6 +1,7 @@
 Contributors welcome!
 
 todo:
+- enable exit without saving text after ask
 - don't fill dynamically menu File but only its submenus
 - ReplaceAll - checkbox "Start from begin"
 - sometimes (when turn off wrapping) status bar is invisible (maybe when are long lines in text?)

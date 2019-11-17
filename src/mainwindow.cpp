@@ -210,6 +210,47 @@ void MainWindow::closeCurrentTab()
         closeTab(tabWidget->currentIndex());
 }
 
+void MainWindow::selectWord()
+{
+    if (tabWidget->currentWidget())
+    {
+        CodeEditor* editor = dynamic_cast<CodeEditor*>(tabWidget->currentWidget());
+        QTextCursor cursor = editor->textCursor();
+        cursor.select(QTextCursor::WordUnderCursor);
+        editor->setTextCursor(cursor);
+    }
+}
+
+void MainWindow::toLower()
+{
+    if (tabWidget->currentWidget())
+    {
+        CodeEditor* editor = dynamic_cast<CodeEditor*>(tabWidget->currentWidget());
+        QString selected = editor->textCursor().selectedText();
+        if (selected=="")
+        {
+            selectWord();
+            selected = editor->textCursor().selectedText();
+        }
+        editor->insertPlainText(selected.toLower());
+    }
+}
+
+void MainWindow::toUpper()
+{
+    if (tabWidget->currentWidget())
+    {
+        CodeEditor* editor = dynamic_cast<CodeEditor*>(tabWidget->currentWidget());
+        QString selected = editor->textCursor().selectedText();
+        if (selected=="")
+        {
+            selectWord();
+            selected = editor->textCursor().selectedText();
+        }
+        editor->insertPlainText(selected.toUpper());
+    }
+}
+
 void MainWindow::insertDate()
 {
     if (tabWidget->currentWidget())
@@ -413,6 +454,15 @@ void MainWindow::createMenu()
     QAction *findPrevAction = new QAction("Find &prev", this);
     findPrevAction->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_F3));
     QAction *propertiesAction = new QAction("Properties", this);
+    QAction *tolowerAction = new QAction("to &Lower", this);
+    tolowerAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_L));
+    connect(tolowerAction, SIGNAL(triggered()), this, SLOT(toLower()));
+    QAction *toupperAction = new QAction("to &Upper", this);
+    toupperAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_U));
+    connect(toupperAction, SIGNAL(triggered()), this, SLOT(toUpper()));
+    QAction *selectwordAction = new QAction("select &Word", this);
+    selectwordAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_W));
+    connect(selectwordAction, SIGNAL(triggered()), this, SLOT(selectWord()));
 
     connect(newAction, &QAction::triggered, this, [this]() {
         openOrActivateFile("");
@@ -454,6 +504,10 @@ void MainWindow::createMenu()
 
     fileMenu = menuBar()->addMenu(tr("&File"));
     connect(fileMenu, SIGNAL(aboutToShow()), this, SLOT(showMenuFile()));
+    QMenu* editMenu = menuBar()->addMenu(tr("&Edit"));
+    editMenu->addAction(selectwordAction);
+    editMenu->addAction(tolowerAction);
+    editMenu->addAction(toupperAction);
     QMenu* searchMenu = menuBar()->addMenu(tr("&Search"));
     searchMenu->addAction(findAction);
     searchMenu->addAction(findNextAction);

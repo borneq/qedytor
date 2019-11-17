@@ -53,6 +53,9 @@ public slots:
     void closeCurrentTab();
     void callSaveAs();
     void currentChanged(int index);
+    void selectWord();
+    void toLower();
+    void toUpper();
     void insertDate();
     void insertTime();
     void find(bool bReplace);
