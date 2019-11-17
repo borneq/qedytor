@@ -328,7 +328,7 @@ void CodeEditor::contextMenuEvent(QContextMenuEvent *event)
     action->setShortcut(QKeySequence(QKeySequence::Delete));
     connect(action, &QAction::triggered, this,
             [this]() {
-                    this->insertPlainText("");  //tricky because not delete slot
+                    this->insertPlainText("");  //tricky because not exists delete slot
                 });
     action->setEnabled(textCursor().hasSelection());
     selectionMenu->addAction(action);
