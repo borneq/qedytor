@@ -11,7 +11,7 @@ Command [cmake .. ] in Linux will create makefile, but in Windows ["c:\Program F
 this will create Visual Studio project if is any VS installed. <br>
 But we tested with MinGW in Windows, therefore need call [cmake .. -G "MinGW Makefiles"]<br>
 first add gcc to path, for example d:\Qt\Qt5.12.0\Tools\mingw730_64\bin\ directory.
-next call make , for Linux is enough type "make".<br>
+next call mingw32-make,exe , for Linux is enough type "make".<br>
 3.libargon2.a move/copy from build directory to bin, after creating "bin" in qedytor.<br>
 4.Go to hisyntax directory and run Qt Creator with qedytor\hisyntax\src\hisyntax.pro 
 config it (in Windows was tested with MinGW) build release or debug version.<br>
@@ -33,7 +33,7 @@ libstdc++-6.dll<br>
 libgcc_s_seh-1.dll<br>
 libwinpthread-1.dll<br> 
 (preferred smaller one with no debug information)<br>
-3.Need config QEdytor.json in c:\Users\USER\.config\ in Windows, or /home/USER/.config in Linux.<br>
+3.Need config QEdytor.json in c:\Users\USER\\.config\ in Windows, or /home/USER/.config in Linux.<br>
 Example config is in qedytor\QEdytor.json <br>
 Make directory with syntax and themes and set it in config file by menu: Tools->Config<br>
 
